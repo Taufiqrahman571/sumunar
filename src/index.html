@@ -7,38 +7,50 @@
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&display=swap" rel="stylesheet">
   <title>Sumunar Studio</title>
 </head>
-<body class="font-geist bg-white min-h-screen relative overflow-hidden">
+<body class="font-geist bg-white min-h-screen relative">
   <!-- Gradient Background -->
-  <div class="absolute inset-0 flex items-center justify-center">
-    <div class="absolute w-[672px] h-[672px] z-0"style="left: calc(50% - 672px/2); top: calc(50% - 672px/2 - 417px); background: linear-gradient(180deg, rgba(242,233,64,0.2) 0%, rgba(242,156,64,0.2) 100%); filter: blur(102px);" aria-hidden="true"></div>
+  <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+    <div
+      style="
+        width: min(80vw, 672px);
+        height: min(80vw, 672px);
+        left: 50%;
+        top: 20%;
+        transform: translate(-50%, -20%);
+        position: absolute;
+        background: linear-gradient(180deg, rgba(242,233,64,0.2) 0%, rgba(242,156,64,0.2) 100%);
+        filter: blur(102px);
+      "
+      aria-hidden="true"
+    ></div>
   </div>
 
   <!-- Main Container -->
-  <div class="relative z-10 flex flex-col min-h-screen max-w-[1440px] mx-auto">
-    <nav class="flex flex-row justify-between items-center px-[120px] pt-6 pb-4 w-[1440px] h-20 z-10">
+  <div class="relative z-10 flex flex-col min-h-screen w-full max-w-[400px] md:max-w-[768px] xl:max-w-[1440px] mx-auto">
+    <nav class="flex flex-row justify-between items-center px-6 md:px-16 xl:px-[120px] pt-6 pb-4 w-full h-16 md:h-18 xl:h-20 z-10">
       <!-- Logo -->
-      <div class="w-[133px] h-[26px] flex-none">
+      <div class="w-[100px] h-[20px] md:w-[120px] md:h-[24px] xl:w-[133px] xl:h-[26px] flex-none">
         <img src="../assets/logo.svg" alt="Sumunar Studio logo" class="w-full h-full object-contain" />
       </div>
 
       <!-- Social Icons -->
-      <div class="flex flex-row items-center gap-3 w-36 h-10 flex-none">
-        <div class="social-icon w-10 h-10 bg-white border-1 border-[#F5F5F5] rounded-full flex items-center justify-center p-2 cursor-pointer">
-          <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/instagram.svg" alt="Instagram" class="w-6 h-6" />
+      <div class="flex flex-row items-center gap-2 md:gap-3 w-28 md:w-32 xl:w-36 h-8 md:h-9 xl:h-10 flex-none">
+        <div class="social-icon w-8 h-8 md:w-9 md:h-9 xl:w-10 xl:h-10 bg-white border border-[#F5F5F5] rounded-full flex items-center justify-center p-1.5 md:p-2 cursor-pointer">
+          <img src="../assets/instagram.svg" alt="Instagram" class="w-6 h-6" />
         </div>
-        <div class="social-icon w-10 h-10 bg-white border-1 border-[#F5F5F5] rounded-full flex items-center justify-center p-2 cursor-pointer">
-          <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/linkedin.svg" alt="LinkedIn" class="w-6 h-6" />
+        <div class="social-icon w-8 h-8 md:w-9 md:h-9 xl:w-10 xl:h-10 bg-white border border-[#F5F5F5] rounded-full flex items-center justify-center p-1.5 md:p-2 cursor-pointer">
+          <img src="../assets/linkedin.svg" alt="Instagram" class="w-6 h-6" />
         </div>
-        <div class="social-icon w-10 h-10 bg-white border-1 border-[#F5F5F5] rounded-full flex items-center justify-center p-2 cursor-pointer">
-          <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/x.svg" alt="X (Twitter)" class="w-6 h-6" />
+        <div class="social-icon w-8 h-8 md:w-9 md:h-9 xl:w-10 xl:h-10 bg-white border border-[#F5F5F5] rounded-full flex items-center justify-center p-1.5 md:p-2 cursor-pointer">
+          <img src="../assets/x.svg" alt="Instagram" class="w-6 h-6" />
         </div>
       </div>
     </nav>
 
     <!-- Main Content -->
-    <main class="flex-1 flex flex-col items-center justify-center px-[120px] gap-18">
+    <main class="flex-1 flex flex-col items-center justify-center px-6 md:px-16 xl:px-[120px] gap-8 md:gap-12 xl:gap-18">
       <!-- Headline Section -->
-      <div class="flex flex-col items-center gap-6 w-full max-w-[1200px]">
+      <div class="flex flex-col items-center gap-4 md:gap-5 xl:gap-6 w-full max-w-[350px] md:max-w-[700px] xl:max-w-[1200px]">
         <!-- Soon Indicator -->
         <div class="flex items-center justify-center gap-1 bg-white rounded-full px-2 py-1">
           <div class="w-1.5 h-1.5 bg-[#DC8E3A] rounded-full"></div>
@@ -47,23 +59,23 @@
         </div>
 
         <!-- Main Headline -->
-        <h1 class="text-6xl font-medium leading-[72px] text-center text-[#141414] tracking-[-0.02em] max-w-[916px] fade-in-up opacity-0">
+        <h1 class="text-3xl md:text-6xl xl:text-6xl font-medium leading-tight md:leading-[60px] xl:leading-[72px] text-center text-[#141414] tracking-[-0.02em] max-w-[340px] md:max-w-[680px] xl:max-w-[916px] fade-in-up opacity-0">
           Sumunar Studio is coming to light
         </h1>
 
         <!-- Subtitle -->
-        <p class="text-lg font-normal leading-[30px] text-center text-[#424242] w-full fade-in-up-delay-1">
-          A creative studio that shines ideas into meaningful design.<br>
-          Stay tuned, the light is almost here.
+        <p class="text-sm md:text-base xl:text-lg font-normal leading-relaxed md:leading-[26px] xl:leading-[30px] text-center text-[#424242] w-full fade-in-up-delay-1">
+          A creative studio that shines ideas into meaningful design.<br class="hidden md:block">
+          <span class="md:hidden"> </span>Stay tuned, the light is almost here.
         </p>
       </div>
 
       <!-- Client Logos Section -->
-      <div class="relative flex items-center justify-center w-full max-w-[1200px] h-[52px] overflow-hidden marquee-container">
+      <div class="relative flex items-center justify-center w-full max-w-[350px] md:max-w-[700px] xl:max-w-[1200px] h-[40px] md:h-[46px] xl:h-[52px] overflow-hidden marquee-container">
         <!-- Logos container -->
-        <div class="flex items-center justify-center gap-12 marquee-content">
+        <div class="flex items-center justify-center gap-6 md:gap-8 xl:gap-12 marquee-content">
           <img src="../assets/client1.svg" alt="RealtyMate" style="width:165px; height:34px; object-fit:contain; flex-shrink: 0;" />
-          <img src="../assets/reviva.png" alt="Reviva" style="width:143px; height:38px; object-fit:contain; flex-shrink: 0;" />
+          <img src="../assets/client2.svg" alt="Reviva" style="width:143px; height:38px; object-fit:contain; flex-shrink: 0;" />
           <img src="../assets/client3.svg" alt="grayjay" style="width:104px; height:52px; object-fit:contain; flex-shrink: 0;" />
           <img src="../assets/client4.svg" alt="HelloShowings" style="width:193px; height:34px; object-fit:contain; flex-shrink: 0;" />
           <img src="../assets/client5.svg" alt="BookFit" style="width:124px; height:34px; object-fit:contain; flex-shrink: 0;" />
@@ -71,7 +83,7 @@
           
           <!-- Seamless Effect -->
           <img src="../assets/client1.svg" alt="RealtyMate" style="width:165px; height:34px; object-fit:contain; flex-shrink: 0;" />
-          <img src="../assets/reviva.png" alt="Reviva" style="width:143px; height:38px; object-fit:contain; flex-shrink: 0;" />
+          <img src="../assets/client2.svg" alt="Reviva" style="width:143px; height:38px; object-fit:contain; flex-shrink: 0;" />
           <img src="../assets/client3.svg" alt="grayjay" style="width:104px; height:52px; object-fit:contain; flex-shrink: 0;" />
           <img src="../assets/client4.svg" alt="HelloShowings" style="width:193px; height:34px; object-fit:contain; flex-shrink: 0;" />
           <img src="../assets/client5.svg" alt="BookFit" style="width:124px; height:34px; object-fit:contain; flex-shrink: 0;" />
@@ -79,37 +91,34 @@
 
           <!-- Seamless Effect -->
           <img src="../assets/client1.svg" alt="RealtyMate" style="width:165px; height:34px; object-fit:contain; flex-shrink: 0;" />
-          <img src="../assets/reviva.png" alt="Reviva" style="width:143px; height:38px; object-fit:contain; flex-shrink: 0;" />
+          <img src="../assets/client2.svg" alt="Reviva" style="width:143px; height:38px; object-fit:contain; flex-shrink: 0;" />
           <img src="../assets/client3.svg" alt="grayjay" style="width:104px; height:52px; object-fit:contain; flex-shrink: 0;" />
           <img src="../assets/client4.svg" alt="HelloShowings" style="width:193px; height:34px; object-fit:contain; flex-shrink: 0;" />
           <img src="../assets/client5.svg" alt="BookFit" style="width:124px; height:34px; object-fit:contain; flex-shrink: 0;" />
           <img src="../assets/client6.svg" alt="Far East" style="width:155px; height:34px; object-fit:contain; flex-shrink: 0;" />
         </div>
 
-        <!-- Left Gradient Overlay -->
-        <div style=" position: absolute; width: 168px; right: 0px; top: -2px; bottom: -2px; background: linear-gradient(270deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%); flex: none; z-index: 6;"></div>
+        <!-- Right Gradient Overlay -->
+        <div class="absolute w-[60px] md:w-[100px] xl:w-[168px] right-0 top-0 bottom-0 bg-gradient-to-l from-white to-transparent z-10"></div>
       
         <!-- Left Gradient Overlay -->
-        <div style=" position: absolute; width: 168px; left: 0px; top: -2px; bottom: -2px; background: linear-gradient(270deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%); transform: matrix(-1, 0, 0, 1, 0, 0); flex: none; z-index: 7;"></div>
+        <div class="absolute w-[60px] md:w-[100px] xl:w-[168px] left-0 top-0 bottom-0 bg-gradient-to-r from-white to-transparent z-10"></div>
       </div>
 
       <!-- Contact Button -->
-      <button class="contact-btn flex items-center justify-center bg-[#F29C40] hover:bg-[#DC8E3A] text-white font-medium text-base px-6 py-3 rounded-full shadow-sm transition-colors duration-200 fade-in-up-delay-2">
+      <button class="contact-btn flex items-center justify-center bg-[#F29C40] hover:bg-[#DC8E3A] text-white font-medium text-sm md:text-base px-4 md:px-5 xl:px-6 py-2.5 md:py-3 rounded-full shadow-sm transition-colors duration-200 fade-in-up-delay-2">
         Contact Us
       </button>
     </main>
 
     <!-- Footer -->
-    <footer class="flex flex-col items-center px-[120px] pb-5 gap-5 mt-auto">
+    <footer class="flex flex-col items-center px-6 md:px-16 xl:px-[120px] pb-4 md:pb-5 gap-3 md:gap-4 xl:gap-5 mt-auto">
       <!-- Divider Line -->
-      <div class="w-[632px] h-px">
-        <img src="../assets/divider.svg" alt="Divider" class="w-full h-px" />
-      </div>
-      
+      <div class="w-full max-w-[300px] md:max-w-[500px] xl:max-w-[632px] h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
       <!-- Copyright -->
-      <div class="flex flex-row justify-center items-center gap-1.5 w-[1200px] h-[26px] flex-none self-stretch">
-        <span class="w-[265px] h-[26px] font-normal text-base leading-[26px] text-center text-[#525252] flex-none">© 2025 Sumunar Studio. Made with</span>
-        <div class="w-[18px] h-[18px] flex-none">
+      <div class="flex flex-row justify-center items-center gap-1.5 w-full max-w-[350px] md:max-w-[700px] xl:max-w-[1200px] h-[20px] md:h-[24px] xl:h-[26px] flex-none">
+        <span class="font-normal text-xs md:text-sm xl:text-base leading-tight md:leading-[24px] xl:leading-[26px] text-center text-[#525252] flex-none">© 2025 Sumunar Studio. Made with</span>
+        <div class="w-[14px] h-[14px] md:w-[16px] md:h-[16px] xl:w-[18px] xl:h-[18px] flex-none">
           <img src="../assets/smile.svg" alt="Smile" class="w-full h-full" />
         </div>
       </div>
