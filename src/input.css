@@ -20,6 +20,8 @@
   /* Typography */
   --text-6xl: 3.75rem;
   --text-6xl--line-height: 1.2;
+  --text-3xl: 2.6rem;
+  --text-3xl--line-height: 1.667;
   --text-lg: 1.125rem;
   --text-lg--line-height: 1.667;
   --text-base: 1rem;

@@ -7,32 +7,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&display=swap" rel="stylesheet">
   <title>Sumunar Studio</title>
 </head>
-<body class="font-geist bg-white min-h-screen relative">
+<body class="font-geist bg-white min-h-screen relative w-full z-10 flex flex-col">
   <!-- Gradient Background -->
   <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
     <div
-      style="
-        width: min(80vw, 672px);
-        height: min(80vw, 672px);
-        left: 50%;
-        top: 20%;
-        transform: translate(-50%, -20%);
-        position: absolute;
-        background: linear-gradient(180deg, rgba(242,233,64,0.2) 0%, rgba(242,156,64,0.2) 100%);
-        filter: blur(102px);
-      "
-      aria-hidden="true"
+      style="width: min(80vw, 672px); height: min(80vw, 672px); top: 0%; left: 50%; transform: translateX(-50%); position: absolute; background: linear-gradient(180deg, rgba(242,233,64,0.2) 0%, rgba(242,156,64,0.2) 100%); filter: blur(102px); height: 35vh;" aria-hidden="true"
     ></div>
   </div>
 
   <!-- Main Container -->
-  <div class="relative z-10 flex flex-col min-h-screen w-full max-w-[400px] md:max-w-[768px] xl:max-w-[1440px] mx-auto">
-    <nav class="flex flex-row justify-between items-center px-6 md:px-16 xl:px-[120px] pt-6 pb-4 w-full h-16 md:h-18 xl:h-20 z-10">
+  <div class="relative z-10 flex flex-col min-h-screen">
+    <nav class="flex justify-between items-center px-6 md:px-16 xl:px-[120px] pt-6 pb-4 w-full h-16 md:h-18 xl:h-20 z-10">
       <!-- Logo -->
-      <div class="w-[100px] h-[20px] md:w-[120px] md:h-[24px] xl:w-[133px] xl:h-[26px] flex-none">
-        <img src="assets/logo.svg" alt="Sumunar Studio logo" class="w-full h-full object-contain" />
+      <div class="flex-none max-w-[150px]">
+        <img src="assets/logo.svg" alt="Sumunar Studio logo" class="w-full h-auto object-contain" />
       </div>
-
       <!-- Social Icons -->
       <div class="flex flex-row items-center gap-2 md:gap-3 w-28 md:w-32 xl:w-36 h-8 md:h-9 xl:h-10 flex-none">
         <div class="social-icon w-8 h-8 md:w-9 md:h-9 xl:w-10 xl:h-10 bg-white border border-[#F5F5F5] rounded-full flex items-center justify-center p-1.5 md:p-2 cursor-pointer">
@@ -65,8 +54,9 @@
 
         <!-- Subtitle -->
         <p class="text-sm md:text-base xl:text-lg font-normal leading-relaxed md:leading-[26px] xl:leading-[30px] text-center text-[#424242] w-full fade-in-up-delay-1">
-          A creative studio that shines ideas into meaningful design.<br class="hidden md:block">
-          <span class="md:hidden"> </span>Stay tuned, the light is almost here.
+          A creative studio that shines ideas into<br class="sm:hidden"> meaningful design.<br class="hidden md:block">
+          <span class="md:hidden"> </span>
+          <br class="sm:hidden"> Stay tuned, the light is almost here.
         </p>
       </div>
 
