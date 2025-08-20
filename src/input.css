@@ -28,6 +28,8 @@
   --text-lg--line-height: 30px;
   --text-base: 16px;
   --text-base--line-height: 26px;
+  --text-footer: 14px;
+  --text-footer--line-height: 24px;
 
   --font-weight-medium: 500;
   --font-weight-normal: 400;
@@ -133,40 +135,31 @@
 .contact-btn {
   position: relative;
   overflow: hidden;
-  background: #F29C40;
+  background: #F29C40; /* warna default */
   color: white;
   border: 1.5px solid transparent;
-  transform: translateY(0);
   box-shadow: 0 4px 12px rgba(242, 156, 64, 0.2);
-  transition: color 0.1s ease, border 0.1s ease;
+  transition: color 0.3s ease, border 0.2s ease;
   z-index: 0;
 }
 
 .contact-btn::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 50%;
-  height: 100%;
-  width: 0;
+  inset: 0;
   background: white;
-  transform: translateX(-50%);
-  transition: width 0.1s ease-out;
+  clip-path: ellipse(0% 60% at 50% 50%); /* awalnya kecil di tengah */
+  transition: clip-path 0.3s ease-out;
   z-index: -1;
 }
 
 .contact-btn:hover::before {
-  width: 100%;
+  clip-path: ellipse(120% 120% at 50% 50%); /* melengkung kiri-kanan */
 }
 
 .contact-btn:hover {
-  color: #F29C40;
+  color: #F29C40; /* teks ikut berubah setelah area putih muncul */
   border: 1.5px solid #F29C40;
-}
-
-.contact-btn:active {
-  transform: translateY(0);
-  box-shadow: 0 4px 12px rgba(242, 156, 64, 0.2);
 }
 
 @keyframes fadeInUp {
