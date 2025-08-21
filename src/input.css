@@ -1,5 +1,4 @@
 @import "tailwindcss";
-
 @theme {
   --font-geist: 'Geist', sans-serif;
   
@@ -30,21 +29,25 @@
   --text-base--line-height: 26px;
   --text-footer: 14px;
   --text-footer--line-height: 24px;
-
   --font-weight-medium: 500;
   --font-weight-normal: 400;
-
   /* Letter spacing */
   --letter-spacing-tight: -0.32px;
 }
 
-/* marquee auto slider */
+/* SAFARI OPTIMIZED MARQUEE */
 .marquee-container {
   overflow: hidden;
   width: 100%;
   max-width: 1200px;
   height: 52px;
   position: relative;
+  /* Safari optimization: Force hardware acceleration */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  /* Prevent Safari memory leaks */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .marquee-content {
@@ -53,34 +56,55 @@
   gap: 3rem;
   animation: marquee-seamless 35s linear infinite;
   width: max-content;
+  /* Safari-specific optimizations */
+  will-change: transform;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  /* Force GPU layer for smoother animation */
+  -webkit-perspective: 1000px;
+  perspective: 1000px;
 }
 
 @keyframes marquee-seamless {
   0% {
-      transform: translateX(0);
+    -webkit-transform: translateX(0) translateZ(0);
+    transform: translateX(0) translateZ(0);
   }
   100% {
-      /* Geser tepat 1 set logo (33.33% dari total 3 set) */
-      transform: translateX(calc(-33.33% - 2rem));
+    /* Safari prefers explicit translateZ for GPU acceleration */
+    -webkit-transform: translateX(calc(-33.33% - 2rem)) translateZ(0);
+    transform: translateX(calc(-33.33% - 2rem)) translateZ(0);
   }
 }
 
-/* Logo styling */
+/* SAFARI OPTIMIZED LOGO STYLING */
 .logo-item {
   flex-shrink: 0;
   object-fit: contain;
+  /* Safari image rendering optimization */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
 }
 
-/* Demo gradient overlays */
+/* SAFARI OPTIMIZED GRADIENTS */
 .gradient-left {
   position: absolute;
   width: 168px;
   left: 0;
   top: -2px;
   bottom: -2px;
+  /* Safari-friendly gradient with fallback */
+  background: -webkit-linear-gradient(left, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%);
   background: linear-gradient(90deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%);
   z-index: 10;
   pointer-events: none;
+  /* Force hardware acceleration */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
 .gradient-right {
@@ -89,14 +113,39 @@
   right: 0;
   top: -2px;
   bottom: -2px;
+  /* Safari-friendly gradient with fallback */
+  background: -webkit-linear-gradient(right, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%);
   background: linear-gradient(270deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%);
   z-index: 10;
   pointer-events: none;
+  /* Force hardware acceleration */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
+/* SAFARI OPTIMIZED BLUR - Use sparingly */
+.gradient-blur {
+  /* Safari blur optimization */
+  -webkit-filter: blur(102px);
+  filter: blur(102px);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  /* Limit blur repaints */
+  will-change: auto;
+  /* Force GPU layer */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* SAFARI OPTIMIZED SOCIAL ICONS */
 .social-icon {
   position: relative;
   overflow: hidden;
+  /* Safari optimization */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .social-icon::before {
@@ -108,9 +157,17 @@
   height: 0;
   background-color: #F29C40;
   border-radius: 50%;
+  -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  transition: width 0.3s ease, height 0.3s ease;
+  /* Safari-optimized transition */
+  -webkit-transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                      height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+              height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1;
+  /* Force GPU acceleration */
+  -webkit-transform: translate(-50%, -50%) translateZ(0);
+  transform: translate(-50%, -50%) translateZ(0);
 }
 
 .social-icon:hover::before {
@@ -125,22 +182,38 @@
 .social-icon img {
   position: relative;
   z-index: 2;
-  transition: filter 0.3s ease;
+  /* Safari-optimized filter transition */
+  -webkit-transition: -webkit-filter 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: filter 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  /* GPU acceleration */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
 .social-icon:hover img {
+  -webkit-filter: brightness(0) invert(1);
   filter: brightness(0) invert(1);
 }
 
+/* SAFARI OPTIMIZED CONTACT BUTTON */
 .contact-btn {
   position: relative;
   overflow: hidden;
-  background: #F29C40; /* warna default */
+  background: #F29C40;
   color: white;
   border: 1.5px solid transparent;
   box-shadow: 0 4px 12px rgba(242, 156, 64, 0.2);
-  transition: color 0.3s ease, border 0.2s ease;
+  /* Safari-optimized transitions */
+  -webkit-transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                      border 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+              border 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 0;
+  /* Force hardware acceleration */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .contact-btn::before {
@@ -148,57 +221,131 @@
   position: absolute;
   inset: 0;
   background: white;
-  clip-path: ellipse(0% 60% at 50% 50%); /* awalnya kecil di tengah */
-  transition: clip-path 0.3s ease-out;
+  /* Safari-friendly clip-path with fallback */
+  -webkit-clip-path: ellipse(0% 60% at 50% 50%);
+  clip-path: ellipse(0% 60% at 50% 50%);
+  /* Optimized transition for Safari */
+  -webkit-transition: -webkit-clip-path 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: clip-path 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   z-index: -1;
+  /* Force GPU layer */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
 .contact-btn:hover::before {
-  clip-path: ellipse(120% 120% at 50% 50%); /* melengkung kiri-kanan */
+  -webkit-clip-path: ellipse(120% 120% at 50% 50%);
+  clip-path: ellipse(120% 120% at 50% 50%);
 }
 
 .contact-btn:hover {
-  color: #F29C40; /* teks ikut berubah setelah area putih muncul */
+  color: #F29C40;
   border: 1.5px solid #F29C40;
+}
+
+/* SAFARI OPTIMIZED ANIMATIONS */
+@-webkit-keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(30px) translateZ(0);
+    transform: translateY(30px) translateZ(0);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0) translateZ(0);
+    transform: translateY(0) translateZ(0);
+  }
 }
 
 @keyframes fadeInUp {
   0% {
-      opacity: 0;
-      transform: translateY(30px);
+    opacity: 0;
+    -webkit-transform: translateY(30px) translateZ(0);
+    transform: translateY(30px) translateZ(0);
   }
   100% {
-      opacity: 1;
-      transform: translateY(0);
+    opacity: 1;
+    -webkit-transform: translateY(0) translateZ(0);
+    transform: translateY(0) translateZ(0);
   }
 }
 
 .fade-in-up {
-  animation: fadeInUp 0.8s ease-out forwards;
+  -webkit-animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  /* Safari optimization */
+  will-change: transform, opacity;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .fade-in-up-delay-1 {
-  animation: fadeInUp 0.8s ease-out 0.3s forwards;
+  -webkit-animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+  animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
   opacity: 0;
+  /* Safari optimization */
+  will-change: transform, opacity;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .fade-in-up-delay-2 {
-  animation: fadeInUp 0.8s ease-out 0.6s forwards;
+  -webkit-animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.6s forwards;
+  animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.6s forwards;
   opacity: 0;
+  /* Safari optimization */
+  will-change: transform, opacity;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
+/* SAFARI MOBILE OPTIMIZATIONS */
 @media (max-width: 430px) {
   .marquee-content {
+    /* Faster animation for mobile Safari */
+    -webkit-animation: marquee-seamless 10s linear infinite;
     animation: marquee-seamless 10s linear infinite;
+    will-change: transform;
+    /* Enhanced mobile Safari optimization */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
   }
-
+  
+  /* Safari mobile image optimization */
   img[alt="RealtyMate"],
   img[alt="Reviva"],
   img[alt="grayjay"],
   img[alt="HelloShowings"],
   img[alt="BookFit"],
   img[alt="Far East"] {
-    height: 28px !important; /* lebih kecil dari default */
-    width: auto !important;  /* biar proporsi terjaga */
+    height: 28px !important;
+    width: auto !important;
+    /* Mobile Safari image optimization */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    image-rendering: -webkit-optimize-contrast;
+  }
+}
+
+/* SAFARI MEMORY CLEANUP */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-content {
+    animation: none;
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  
+  .fade-in-up,
+  .fade-in-up-delay-1,
+  .fade-in-up-delay-2 {
+    animation: none;
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+  
+  /* Remove will-change when not needed */
+  * {
+    will-change: auto !important;
   }
 }
