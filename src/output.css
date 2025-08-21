@@ -432,8 +432,8 @@
   .py-3 {
     padding-block: calc(var(--spacing) * 3);
   }
-  .py-\[24px\] {
-    padding-block: 24px;
+  .py-\[16px\] {
+    padding-block: 16px;
   }
   .pt-6 {
     padding-top: calc(var(--spacing) * 6);
