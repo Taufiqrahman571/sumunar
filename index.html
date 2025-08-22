@@ -22,6 +22,7 @@
   <meta name="twitter:site" content="@username_twitter_kamu" />
   <!-- Lottie Player Animations -->
   <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <script src="src/script.js" defer></script>
 </head>
 <body class="font-geist bg-white relative w-full z-10">
   <!-- Gradient Background -->
@@ -40,15 +41,21 @@
       </div>
       <!-- Social Icons -->
       <div class="flex flex-row items-center gap-2 md:gap-3 w-28 md:w-32 xl:w-36 h-8 md:h-9 xl:h-10 flex-none">
-        <div class="social-icon w-8 h-8 md:w-9 md:h-9 xl:w-10 xl:h-10 bg-white border border-[#F5F5F5] rounded-full flex items-center justify-center p-1.5 md:p-2 cursor-pointer">
-          <img src="assets/instagram.svg" alt="Instagram" class="w-6 h-6" />
-        </div>
-        <div class="social-icon w-8 h-8 md:w-9 md:h-9 xl:w-10 xl:h-10 bg-white border border-[#F5F5F5] rounded-full flex items-center justify-center p-1.5 md:p-2 cursor-pointer">
-          <img src="assets/linkedin.svg" alt="Instagram" class="w-6 h-6" />
-        </div>
-        <div class="social-icon w-8 h-8 md:w-9 md:h-9 xl:w-10 xl:h-10 bg-white border border-[#F5F5F5] rounded-full flex items-center justify-center p-1.5 md:p-2 cursor-pointer">
-          <img src="assets/x.svg" alt="Instagram" class="w-6 h-6" />
-        </div>
+        <a href="https://www.instagram.com/yourusername" target="_blank" rel="noopener noreferrer">
+          <div class="social-icon w-8 h-8 md:w-9 md:h-9 xl:w-10 xl:h-10 bg-white border border-[#F5F5F5] rounded-full flex items-center justify-center p-1.5 md:p-2 cursor-pointer">
+            <img src="assets/instagram.svg" alt="Instagram" class="w-6 h-6" />
+          </div>
+        </a>
+        <a href="https://www.linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer">
+          <div class="social-icon w-8 h-8 md:w-9 md:h-9 xl:w-10 xl:h-10 bg-white border border-[#F5F5F5] rounded-full flex items-center justify-center p-1.5 md:p-2 cursor-pointer">
+            <img src="assets/linkedin.svg" alt="Instagram" class="w-6 h-6" />
+          </div>
+        </a>
+        <a href="https://x.com/yourusername" target="_blank" rel="noopener noreferrer">
+          <div class="social-icon w-8 h-8 md:w-9 md:h-9 xl:w-10 xl:h-10 bg-white border border-[#F5F5F5] rounded-full flex items-center justify-center p-1.5 md:p-2 cursor-pointer">
+            <img src="assets/x.svg" alt="Instagram" class="w-6 h-6" />
+          </div>
+        </a>
       </div>
     </nav>
 
@@ -59,9 +66,6 @@
       <div class="flex flex-col items-center gap-[24px] md:gap-5 xl:gap-6 w-full max-w-[350px] md:max-w-[700px] xl:max-w-[1200px]">
         <!-- Soon Indicator -->
         <div class="flex items-center justify-center gap-1 bg-white rounded-full">
-          <!-- <div class="w-[6px] h-[6px] bg-[#DC8E3A] rounded-full"></div>
-          <div class="w-[6px] h-[6px] bg-[#F5B066] rounded-full"></div>
-          <div class="w-[6px] h-[6px] bg-[#F9D1A7] rounded-full"></div> -->
           <lottie-player src="loading_animation.json" background="transparent" speed="1" loop autoplay class="w-[36px] h-[14px]"></lottie-player>
         </div>
 
