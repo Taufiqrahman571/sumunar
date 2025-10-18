@@ -1,12 +1,55 @@
-function openGmailWithAccountChooser() {
-  const gmailUrl = 'https://mail.google.com/mail/?fs=1&to=taufiq@sumunarstudio.com&su=New%20Project%20Inquiry&body=Hi%20Sumunar%20Studio,%0D%0A%0D%0AI%20would%20like%20to%20discuss%20a%20new%20project%20with%20you.%0D%0A%0D%0AHere%20are%20some%20details:%0D%0A-%20Project%20Type:%20%5Be.g.%20Website,%20UI%2FUX,%20Branding%5D%0D%0A-%20Timeline:%20%5Be.g.%202%20months%5D%0D%0A-%20Budget:%20%5Be.g.%20%243000-%245000%5D%0D%0A-%20Project%20Brief:%20%5BPlease%20write%20your%20brief%20here%5D%0D%0A%0D%0APlease%20let%20me%20know%20the%20next%20steps.%0D%0A%0D%0AThanks,%0D%0A%5BYour%20Name%5D&tf=cm';
-  const accountChooserUrl = `https://accounts.google.com/AccountChooser?continue=${encodeURIComponent(gmailUrl)}`;
-  window.open(accountChooserUrl, '_blank', 'noopener,noreferrer');
-}
+// src/script.js
+// Gmail-first composer with mailto fallback and Account Chooser support
+(function () {
+  var to = "taufiq@sumunarstudio.com";
+  var subject = "New Project Inquiry";
 
-document.addEventListener("DOMContentLoaded", () => {
-  const btn = document.querySelector(".contact-btn");
-  if (btn) {
-    btn.addEventListener("click", openGmailWithAccountChooser);
+  var body = [
+    "Hi Sumunar Studio,",
+    "",
+    "I would like to discuss a new project with you.",
+    "",
+    "Here are some details:",
+    "- Project Type: [e.g. Website, UI/UX, Branding]",
+    "- Timeline: [e.g. 2 months]",
+    "- Budget: [e.g. $3000-$5000]",
+    "- Project Brief: [Please write your brief here]",
+    "",
+    "Please let me know the next steps.",
+    "",
+    "Thanks,",
+    "[Your Name]"
+  ].join("\r\n");
+
+  var enc = encodeURIComponent;
+  var gmailUrlBase = "https://mail.google.com/mail/?fs=1&tf=cm";
+  var gmailUrl = gmailUrlBase + "&to=" + enc(to) + "&su=" + enc(subject) + "&body=" + enc(body);
+  var accountChooserUrl = "https://accounts.google.com/AccountChooser?continue=" + encodeURIComponent(gmailUrl);
+
+  var mailtoUrl = "mailto:" + to + "?subject=" + enc(subject) + "&body=" + enc(body);
+
+  function openGmailPreferAccountChooser() {
+    // Try AccountChooser first (helps if user has multiple accounts)
+    var w = window.open(accountChooserUrl, "_blank", "noopener,noreferrer");
+    if (!w) {
+      // popup blocked — open direct gmail URL
+      var w2 = window.open(gmailUrl, "_blank", "noopener,noreferrer");
+      if (!w2) {
+        // still blocked — fallback to mailto
+        window.location.href = mailtoUrl;
+      }
+    }
   }
-});
+
+  document.addEventListener("DOMContentLoaded", function () {
+    // Ensure contactBtn exists; set mailto as fallback href (for no-js)
+    var btn = document.getElementById("contactBtn");
+    if (!btn) return;
+    btn.setAttribute("href", mailtoUrl);
+
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      openGmailPreferAccountChooser();
+    });
+  });
+})();
