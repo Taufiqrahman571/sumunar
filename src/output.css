@@ -1290,7 +1290,9 @@
       --tw-drop-shadow-size: initial;
       --tw-duration: initial;
     }
-    /* Safari prefixes & reduced-motion fallback */
+  }
+}
+ /* Safari prefixes & reduced-motion fallback */
 @-webkit-keyframes btn-sheen { 0% { left:-40%; opacity:0 } 10%{opacity:1} 100%{left:120%; opacity:0} }
 @keyframes btn-sheen { 0% { left:-40%; opacity:0 } 10%{opacity:1} 100%{left:120%; opacity:0} }
 
@@ -1308,6 +1310,3 @@
 }
 @-webkit-keyframes fadeIn { from { opacity: 0; -webkit-transform: translateY(10px); } to { opacity:1; -webkit-transform: translateY(0); } }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity:1; transform: translateY(0); } }
-
-  }
-}
