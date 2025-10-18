@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <!-- Favicons -->
+
+  <!-- Favicons (keep these as you already have them) -->
   <link rel="icon" type="image/svg+xml" href="/assets/icons/favicon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
@@ -13,26 +14,41 @@
   <meta name="theme-color" content="#ffffff">
   <meta name="msapplication-TileColor" content="#ffffff">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="src/output.css">
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&display=swap" rel="stylesheet">
-  <title>Sumunar Studio</title>
-  <meta name="description" content="Sumunar Studio is a UI/UX design and development studio that creates impactful digital solutions — websites, apps, and branding that elevate businesses worldwide.">
-  <!-- Open Graph / Facebook -->
+  <!-- Viewport: include viewport-fit=cover for iOS/Safari -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+  <!-- SEO: canonical + meta description (edit the description if you want) -->
+  <link rel="canonical" href="https://sumunarstudio.com/" />
+  <meta name="description" content="Sumunar Studio is a UI/UX and web development studio that creates impactful digital solutions — websites, apps, and branding that elevate businesses worldwide." />
+  <meta name="author" content="Sumunar Studio">
+
+  <!-- Open Graph -->
   <meta property="og:title" content="Sumunar Studio - UI/UX Design and Development Studio" />
-  <meta property="og:description" content="Sumunar Studio is a UI/UX design and development studio that creates impactful digital solutions — websites, apps, and branding that elevate businesses worldwide." />
+  <meta property="og:description" content="Sumunar Studio is a UI/UX and web development studio that creates impactful digital solutions — websites, apps, and branding that elevate businesses worldwide." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://sumunarstudio.com/" />
   <meta property="og:image" content="https://sumunarstudio.com/assets/preview.png" />
-  <meta property="og:site_name" content=" Studio" />
-  <!-- Twitter Card -->
+  <meta property="og:site_name" content="Sumunar Studio" />
+
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Sumunar Studio - UI/UX Design and Development Studio" />
-  <meta name="twitter:description" content="Sumunar Studio is a UI/UX design and development studio that creates impactful digital solutions — websites, apps, and branding that elevate businesses worldwide." />
+  <meta name="twitter:description" content="Sumunar Studio is a UI/UX and web development studio that creates impactful digital solutions." />
   <meta name="twitter:image" content="https://sumunarstudio.com/assets/preview.png" />
   <meta name="twitter:site" content="@sumunarstudio" />
-  <!-- Lottie Player Animations -->
-  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+  <!-- Fonts & Performance: preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="src/output.css">
+
+  <!-- Lottie - load deferred to avoid render blocking -->
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" defer></script>
+
+  <!-- Main JS (defer is present already in your repo) -->
   <script src="src/script.js" defer></script>
 </head>
   
