@@ -1,10 +1,11 @@
 // src/script.js
-// Gmail-first composer with mailto fallback and Account Chooser support
 (function () {
-  var to = "taufiq@sumunarstudio.com";
+  // --------------------
+  // Email template & URLs
+  // --------------------
+  var to = "hello@sumunarstudio.com";
   var subject = "New Project Inquiry";
-
-  var body = [
+  var bodyLines = [
     "Hi Sumunar Studio,",
     "",
     "I would like to discuss a new project with you.",
@@ -19,37 +20,78 @@
     "",
     "Thanks,",
     "[Your Name]"
-  ].join("\r\n");
-
+  ];
+  var body = bodyLines.join("\r\n");
   var enc = encodeURIComponent;
-  var gmailUrlBase = "https://mail.google.com/mail/?fs=1&tf=cm";
-  var gmailUrl = gmailUrlBase + "&to=" + enc(to) + "&su=" + enc(subject) + "&body=" + enc(body);
+  var gmailBase = "https://mail.google.com/mail/?fs=1&tf=cm";
+  var gmailUrl = gmailBase + "&to=" + enc(to) + "&su=" + enc(subject) + "&body=" + enc(body);
   var accountChooserUrl = "https://accounts.google.com/AccountChooser?continue=" + encodeURIComponent(gmailUrl);
-
   var mailtoUrl = "mailto:" + to + "?subject=" + enc(subject) + "&body=" + enc(body);
 
-  function openGmailPreferAccountChooser() {
-    // Try AccountChooser first (helps if user has multiple accounts)
-    var w = window.open(accountChooserUrl, "_blank", "noopener,noreferrer");
-    if (!w) {
-      // popup blocked — open direct gmail URL
-      var w2 = window.open(gmailUrl, "_blank", "noopener,noreferrer");
-      if (!w2) {
-        // still blocked — fallback to mailto
-        window.location.href = mailtoUrl;
+  // -------------
+  // Contact button
+  // -------------
+  var contactBtn = document.getElementById("contactBtn");
+  if (contactBtn) {
+    // ensure fallback href for no-js
+    contactBtn.setAttribute("href", mailtoUrl);
+    // click handler: try account chooser, then gmail, then mailto
+    contactBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      // try account chooser
+      var w = window.open(accountChooserUrl, "_blank", "noopener,noreferrer");
+      if (!w) {
+        var w2 = window.open(gmailUrl, "_blank", "noopener,noreferrer");
+        if (!w2) {
+          // fallback to mail client
+          window.location.href = mailtoUrl;
+        }
       }
+    });
+
+    // Tooltip: show on hover/focus handled via CSS, but we also add a11y (aria-live for screen readers)
+    // Add aria attributes for tooltip
+    var tooltip = contactBtn.querySelector(".btn-tooltip");
+    if (tooltip) {
+      tooltip.setAttribute("role", "status");
+      tooltip.setAttribute("aria-live", "polite");
     }
+
+    // Optional: on long-press or on mobile tap show toast or copy email (lightweight)
+    contactBtn.addEventListener("contextmenu", function (e) {
+      // allow right-click default menu for copy if needed
+    });
   }
 
-  document.addEventListener("DOMContentLoaded", function () {
-    // Ensure contactBtn exists; set mailto as fallback href (for no-js)
-    var btn = document.getElementById("contactBtn");
-    if (!btn) return;
-    btn.setAttribute("href", mailtoUrl);
-
-    btn.addEventListener("click", function (e) {
-      e.preventDefault();
-      openGmailPreferAccountChooser();
+  // -------------
+  // Works button
+  // -------------
+  var worksBtn = document.getElementById("worksBtn");
+  if (worksBtn) {
+    // If there's a section with id="works", smooth scroll to it.
+    worksBtn.addEventListener("click", function (e) {
+      var target = document.querySelector(worksBtn.getAttribute("href"));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        // Add small focus ring for accessibility
+        target.setAttribute("tabindex", "-1"); // make focusable
+        target.focus({ preventScroll: true });
+      } else {
+        // Fallback: navigate to /works page if present
+        // If you have a separate works page, uncomment next line:
+        // window.location.href = "/works";
+      }
     });
+  }
+
+  // Accessibility: keyboard support (Enter/Space)
+  document.addEventListener("keydown", function (e) {
+    if (!e.target) return;
+    // Activate button on Enter or Space for elements with role=button
+    if ((e.key === "Enter" || e.key === " ") && e.target.matches && e.target.matches('.btn[role="button"]')) {
+      e.preventDefault();
+      e.target.click();
+    }
   });
 })();
