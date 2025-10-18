@@ -1,7 +1,7 @@
 // src/script.js
 // Gmail-first composer with mailto fallback and Account Chooser support
 (function () {
-  var to = "taufiq@sumunarstudio.com";
+  var to = "hello@sumunarstudio.com";
   var subject = "New Project Inquiry";
 
   var body = [
