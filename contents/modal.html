@@ -1,0 +1,130 @@
+<!-- Overlay -->
+<div id="email-modal" data-modal-backdrop="static" class="flex absolute inset-0 z-40 items-center justify-center bg-black/80">
+
+  <!-- Card -->
+  <div class="relative w-[928px] h-[608px] rounded-[16px] bg-white overflow-hidden isolate flex-none order-0 grow-0">
+    <!-- Gradient layer -->
+    <div class="absolute z-0 w-[672px] h-[672px] left-[calc(50%-672px/2-600px)] top-[-366px] [background:linear-gradient(180deg,rgba(242,233,64,0.25)_0%,rgba(242,156,64,0.25)_100%)] [filter:blur(102px)] flex-none order-0 grow-0"></div>
+
+    <!-- Modal body -->
+    <div class="relative z-10 flex flex-row items-center gap-[72px] p-[48px_52px] w-full h-full">
+      
+      <!-- Left -->
+      <div class="flex flex-col justify-between items-start p-[0px] gap-[170px] w-[400px] h-[512px] flex-none order-1 self-stretch grow-0 z-[1]">
+        <!-- Text -->
+        <div class="flex flex-col items-start p-[0px] gap-[12px] w-[400px] h-[208px] flex-none order-0 self-stretch grow-0">
+          <h1 class="w-[400px] h-[144px] font-geist font-medium text-6xl leading-[72px] tracking-[-0.02em] text-neutral-900 flex-none order-0 self-stretch grow-0">
+            Let's Shine Together.
+          </h1>
+          <p class="w-[400px] h-[52px] font-geist font-normal text-base leading-[26px] text-neutral-700 flex-none order-1 self-stretch grow-0">
+            We'd love to hear from you and help bring your ideas to life. We'll comeback typically in 12 hours.
+          </p>
+        </div>
+        <!-- Alternative -->
+        <div class="flex flex-col items-start p-[0px] gap-[12px] w-[400px] h-[70px] flex-none order-1 self-stretch grow-0">
+          <!-- Contacts -->
+          <div class="flex flex-col items-start p-[0px] gap-[10px] w-[400px] h-[70px] flex-none order-1 self-stretch grow-0">
+            <!-- Contact 1 -->
+            <div class="flex flex-row items-center p-[0px] gap-[10px] w-[400px] h-[30px] flex-none order-0 self-stretch grow-0">
+              <img src="../assets/modal/mail.svg" class="w-[24px] h-[24px]">
+              <p class="w-[366px] h-[30px] font-geist font-medium text-lg leading-[30px] text-[#AC6F2D] flex-none order-1 grow-1">
+                hello@sumunarstudio.com
+              </p>
+            </div>
+            <!-- Contact 2 -->
+            <div class="flex flex-row items-center p-[0px] gap-[10px] w-[400px] h-[30px] flex-none order-0 self-stretch grow-0">
+              <img src="../assets/modal/vidcall.svg" class="w-[24px] h-[24px]">
+              <p class="w-[366px] h-[30px] font-geist font-medium text-lg leading-[30px] text-[#AC6F2D] flex-none order-1 grow-1">
+                cal.com/taufiq-sumunar
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="flex flex-col items-start p-[0px] gap-[32px] w-[352px] h-[512px] flex-none order-2 grow-1 z-[2]">
+        <div class="flex flex-col items-start p-[0px] gap-[16px] w-[352px] h-[430px] flex-none order-0 self-stretch grow-0">
+          <!-- Name -->
+          <form action="#" method="post" class="relative box-border isolate flex flex-col items-start gap-[8px] py-[8px] px-0 w-[352px] h-[42px] border-b-[1.25px] border-[#D6D6D6] flex-none order-0 self-stretch grow-0 cursor-text">
+            <input id="name" name="name" type="text" placeholder="Name" class="peer w-[352px] h-[26px] font-geist font-normal text-base leading-[26px] text-[#737373] bg-transparent border-none outline-none flex-none order-0 self-stretch grow-0 z-0 placeholder:text-transparent"/>
+            <label for="name" class="absolute left-0 w-[352px] h-[18px] text-[#737373] font-geist font-normal text-[12px] leading-[18px] transition-all duration-150 ease-out -top-2 z-[1] peer-placeholder-shown:top-[8px] peer-placeholder-shown:text-base peer-placeholder-shown:leading-[26px] peer-placeholder-shown:text-[#737373] peer-focus:-top-2 peer-focus:text-[12px] peer-focus:leading-[18px] peer-focus:text-[#737373] cursor-text">
+              Name
+            </label>
+          </form>
+          <!-- Email -->
+          <form action="#" method="post" class="relative box-border isolate flex flex-col items-start gap-[8px] py-[8px] px-0 w-[352px] h-[42px] border-b-[1.25px] border-[#D6D6D6] flex-none order-0 self-stretch grow-0 cursor-text">
+            <input id="email" name="email" type="email" placeholder="Email" class="peer w-[352px] h-[26px] font-geist font-normal text-base leading-[26px] text-[#737373] bg-transparent border-none outline-none flex-none order-0 self-stretch grow-0 z-0 placeholder:text-transparent"/>
+            <label for="email" class="absolute left-0 w-[352px] h-[18px] text-[#737373] font-geist font-normal text-[12px] leading-[18px] transition-all duration-150 ease-out -top-2 z-[1] peer-placeholder-shown:top-[8px] peer-placeholder-shown:text-base peer-placeholder-shown:leading-[26px] peer-placeholder-shown:text-[#737373] peer-focus:-top-2 peer-focus:text-[12px] peer-focus:leading-[18px] peer-focus:text-[#737373] cursor-text">
+              Email
+            </label>
+          </form>
+          <!-- Project Details -->
+          <form action="#" method="post" class="relative box-border flex flex-col items-start gap-[8px] py-[8px] px-0 w-[352px] h-[168px] border-b-[1.25px] border-[#D6D6D6] cursor-text">
+            <textarea id="project-details" name="project-details" placeholder=" " class="peer w-[352px] h-[168px] font-geist font-normal text-base leading-[26px] text-[#737373] placeholder:text-transparent bg-transparent border-none outline-none resize-none overflow-y-scroll break-words [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"></textarea>
+            <label for="project-details" class="absolute left-0 w-[352px] h-[18px] text-[#737373] font-geist font-normal text-[12px] leading-[18px] transition-all duration-150 ease-out -top-2 z-[1] peer-placeholder-shown:top-[8px] peer-placeholder-shown:text-base peer-placeholder-shown:leading-[26px] peer-placeholder-shown:text-[#737373] peer-focus:-top-2 peer-focus:text-[12px] peer-focus:leading-[18px] peer-focus:text-[#737373] cursor-text">
+              Project Details
+            </label>
+          </form>
+
+          <!-- Phil -->
+          <div class="flex flex-col items-start p-[0px] gap-[12px] w-[352px] h-[130px] flex-none order-3 self-stretch grow-0">
+            <p class="w-[352px] h-[26px] font-geist text-base leading-[26px] text-[#424242] flex-none order-0 self-stretch grow-0">
+              Your Investment (USD)
+            </p>
+
+            <!-- Frame 2 -->
+            <div class="flex flex-row flex-wrap items-start content-start p-0 gap-[8px] w-[352px] h-[92px] flex-none order-1 self-stretch grow-0">
+              <!-- Badges -->
+              <button type="button" data-badge aria-pressed="false" class="box-border flex flex-row justify-center items-center py-[8px] px-[20px] gap-[6px] w-[83px] h-[42px] bg-white border-[1.25px] border-[#D6D6D6] text-[#525252] rounded-[40px] flex-none order-0 grow-0 cursor-pointer transition-colors duration-150 ease-out hover:border-[#737373] aria-[pressed=true]:border-[#DC8E3A] aria-[pressed=true]:text-[#DC8E3A] aria-[pressed=true]:font-medium">
+                <span class="w-[43px] h-[26px] font-geist font-normal text-base leading-[26px] text-center flex-none order-0 grow-0">
+                  &lt; $2k
+                </span>
+              </button>
+              <button type="button" data-badge aria-pressed="false" class="box-border flex flex-row justify-center items-center py-[8px] px-[20px] gap-[6px] w-[95px] h-[42px] bg-white border-[1.25px] border-[#D6D6D6] text-[#525252] rounded-[40px] flex-none order-0 grow-0 cursor-pointer transition-colors duration-150 ease-out hover:border-[#737373] aria-[pressed=true]:border-[#DC8E3A] aria-[pressed=true]:text-[#DC8E3A] aria-[pressed=true]:font-medium">
+                <span class="w-[55px] h-[26px] font-geist font-normal text-base leading-[26px] text-center flex-none order-0 grow-0">
+                  $2k-5k
+                </span>
+              </button>
+              <button type="button" data-badge aria-pressed="false" class="box-border flex flex-row justify-center items-center py-[8px] px-[20px] gap-[6px] w-[106px] h-[42px] bg-white border-[1.25px] border-[#D6D6D6] text-[#525252] rounded-[40px] flex-none order-0 grow-0 cursor-pointer transition-colors duration-150 ease-out hover:border-[#737373] aria-[pressed=true]:border-[#DC8E3A] aria-[pressed=true]:text-[#DC8E3A] aria-[pressed=true]:font-medium">
+                <span class="w-[66px] h-[26px] font-geist font-normal text-base leading-[26px] text-center flex-none order-0 grow-0">
+                  $5k-10k
+                </span>
+              </button>
+              <button type="button" data-badge aria-pressed="false" class="box-border flex flex-row justify-center items-center py-[8px] px-[20px] gap-[6px] w-[112px] h-[42px] bg-white border-[1.25px] border-[#D6D6D6] text-[#525252] rounded-[40px] flex-none order-0 grow-0 cursor-pointer transition-colors duration-150 ease-out hover:border-[#737373] aria-[pressed=true]:border-[#DC8E3A] aria-[pressed=true]:text-[#DC8E3A] aria-[pressed=true]:font-medium">
+                <span class="w-[72px] h-[26px] font-geist font-normal text-base leading-[26px] text-center flex-none order-0 grow-0">
+                  $10k-15k
+                </span>
+              </button>
+              <button type="button" data-badge aria-pressed="false" class="box-border flex flex-row justify-center items-center py-[8px] px-[20px] gap-[6px] w-[90px] h-[42px] bg-white border-[1.25px] border-[#D6D6D6] text-[#525252] rounded-[40px] flex-none order-0 grow-0 cursor-pointer transition-colors duration-150 ease-out hover:border-[#737373] aria-[pressed=true]:border-[#DC8E3A] aria-[pressed=true]:text-[#DC8E3A] aria-[pressed=true]:font-medium">
+                <span class="w-[50px] h-[26px] font-geist font-normal text-base leading-[26px] text-center flex-none order-0 grow-0">
+                  $15k+
+                </span>
+              </button>
+              <script>
+                document.querySelectorAll('[data-badge]').forEach(btn => {
+                  btn.addEventListener('click', () => {
+                    const pressed = btn.getAttribute('aria-pressed') === 'true';
+                    btn.setAttribute('aria-pressed', (!pressed).toString());
+                  });
+                });
+              </script>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA Button -->
+        <button type="button" class="flex flex-row justify-center items-center py-[12px] px-[24px] gap-[6px] w-[352px] h-[50px] bg-[#F29C40] border border-transparent shadow-[0px_1px_2px_rgba(16,24,40,0.05)] rounded-[40px] flex-none order-1 self-stretch grow-0 cursor-pointer transition-all duration-200 ease-out hover:bg-white hover:border-[1.5px] hover:border-[#F29C40] text-white hover:text-[#F29C40]">
+          <span class="font-geist font-medium text-base leading-[26px]">
+            Send Message
+          </span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+  <!-- Cancel -->
+  <button type="button" data-modal-hide="email-modal" class="flex flex-row items-center p-[8px] gap-[8px] absolute w-[40px] h-[40px] right-[40px] top-[40px] bg-[rgba(255,255,255,0.5)] backdrop-blur-[1px] rounded-[48px] flex-none order-1 grow-0 z-[1] cursor-pointer">
+    <img src="../assets/modal/cancel.svg" class="w-[24px] h-[24px]">
+  </button>
+</div>
