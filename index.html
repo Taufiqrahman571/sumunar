@@ -51,47 +51,7 @@
   <!-- Main JS (defer is present already in your repo) -->
   <!-- <script src="src/script.js" defer></script> -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script>
-    $(function () {
-      const MODAL_ID = "email-modal";       // must match the id in modal.html
-      const MODAL_URL = "contents/modal.html";                // your modal partial file
-      const $root = $("#modals-root");
-
-      $("#contactBtn").on("click", function (e) {
-        e.preventDefault();
-
-        // Load modal.html once, then reuse
-        if ($root.children().length === 0) {
-          $root.load(MODAL_URL, function () {
-            bindModalEvents();
-            openModal();
-          });
-        } else {
-          openModal();
-        }
-      });
-
-      function openModal() {
-        const $m = $("#" + MODAL_ID);
-        // Tailwind/Flowbite style: remove `hidden` and ensure it's flex-centered
-        $m.removeClass("hidden").addClass("flex");
-        $("body").addClass("overflow-hidden"); // prevent background scroll
-      }
-
-      function closeModal() {
-        const $m = $("#" + MODAL_ID);
-        $m.addClass("hidden").removeClass("flex");
-        $("body").removeClass("overflow-hidden");
-      }
-
-      function bindModalEvents() {
-        // Close button with data attribute from your snippet
-        $(document).on("click", `[data-modal-hide="${MODAL_ID}"]`, function () {
-          closeModal();
-        });
-      }
-    });
-  </script>
+  <script src="/js/email.js"></script>
 </head>
   
 <body class="font-geist bg-white relative w-full z-10">
