@@ -42,8 +42,8 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
-    // Ensure contactBtn exists; set mailto as fallback href (for no-js)
-    var btn = document.getElementById("contactBtn");
+    // Ensure contact-btn exists; set mailto as fallback href (for no-js)
+    var btn = document.getElementById("contact-btn");
     if (!btn) return;
     btn.setAttribute("href", mailtoUrl);
 

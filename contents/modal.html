@@ -1,8 +1,8 @@
 <!-- Overlay -->
-<div id="email-modal" data-modal-backdrop="static"
+<div id="modal" data-modal-backdrop="static"
   class="flex fixed inset-0 z-40 items-center justify-center bg-black/80">
 
-  <!-- Card -->
+  <!-- Modal card -->
   <div class="absolute bg-white overflow-hidden isolate rounded-[16px] flex-none order-0 grow-0 w-[928px] h-[608px]
     max-[1010px]:w-[536px] max-[1010px]:h-[696px]
     max-[655px]:w-[352px] max-[655px]:h-[654px]">
@@ -12,7 +12,7 @@
       max-[655px]:left-[calc(50% - 680px/2 - 340px)] max-[655px]:top-[-380px]"></div>
 
     <!-- Modal body -->
-    <div class="absolute z-0 flex flex-row items-center gap-[72px] p-[48px_52px] w-full h-full
+    <div class="absolute z-0 flex flex-row items-center gap-[72px] p-[48px_52px] w-full h-full overflow-hidden
       max-[1010px]:flex-col max-[1010px]:items-start max-[1010px]:p-[40px] max-[1010px]:gap-[24px] max-[1010px]:overflow-y-auto
       max-[655px]:flex-col max-[655px]:items-start max-[655px]:p-[24px] max-[655px]:gap-[24px] max-[655px]:self-stretch max-[655px]:overflow-y-auto">
       
@@ -77,52 +77,150 @@
           max-[1010px]:w-[456px] max-[1010px]:h-[430px]
           max-[655px]:w-[304px] max-[655px]:h-[430px]">
           <!-- Name -->
-          <form action="#" method="post"
-            class="relative box-border isolate flex flex-col items-start gap-[8px] py-[8px] px-0 w-[352px] h-[42px] border-b-[1.25px] border-[#D6D6D6] flex-none order-0 self-stretch grow-0 cursor-text
+          <form id="name-form"
+            class="group relative box-border isolate flex flex-col items-start gap-[8px] py-[8px] px-0 w-[352px] h-[42px] border-b-[1.25px] border-[#D6D6D6] flex-none order-0 self-stretch grow-0 cursor-text 
+            data-[invalid=true]:border-red-600
+            hover:border-[#F29C40]
+            focus-within:border-[#F29C40]
+            [input:not(:placeholder-shown)~&]:border-[#D6D6D6]
             max-[1010px]:w-[456px] max-[1010px]:h-[42px]
             max-[655px]:w-[304px] max-[655px]:h-[42px]">
-            <input id="name" name="name" type="text" placeholder="Name"
-              class="peer w-[352px] h-[26px] font-geist font-normal text-base leading-[26px] text-[#737373] bg-transparent border-none outline-none flex-none order-0 self-stretch grow-0 z-0 placeholder:text-transparent
+            <input id="name" name="name" type="text" placeholder="Name" aria-invalid="false"
+              class="peer w-[352px] h-[26px] font-geist font-normal text-base leading-[26px] text-[#737373] bg-transparent border-none outline-none flex-none order-0 self-stretch grow-0 z-0 placeholder:text-transparent pr-[26px]
+              group-data-[invalid=true]:focus:text-red-600
+              group-data-[invalid=true]:placeholder-shown:text-red-600
+              group-data-[invalid=true]:[:not(:placeholder-shown)]:text-red-600
+              [:not(:placeholder-shown)]:text-[#424242]
+              group-data-[invalid=false]:focus:text-[#AC6F2D]
+              focus:text-[#AC6F2D]
               max-[1010px]:w-[456px] max-[1010px]:h-[26px]
               max-[655px]:w-[304px] max-[655px]:h-[26px]"/>
             <label for="name"
-              class="absolute left-0 w-[352px] h-[18px] text-[#737373] font-geist font-normal text-[12px] leading-[18px] transition-all duration-150 ease-out -top-2 z-[1] peer-placeholder-shown:top-[8px] peer-placeholder-shown:text-base peer-placeholder-shown:leading-[26px] peer-placeholder-shown:text-[#737373] peer-focus:-top-2 peer-focus:text-[12px] peer-focus:leading-[18px] peer-focus:text-[#737373] cursor-text
-              max-[1010px]:w-[456px] max-[1010px]:h-[18px]
-              max-[655px]:w-[304px] max-[655px]:h-[18px]">
+              class="absolute left-0 w-[352px] h-[26px] text-[#737373] font-geist font-normal text-base leading-[26px]
+              transition-all duration-150 ease-out top-[8px] z-[1]
+              peer-placeholder-shown:top-[8px] peer-placeholder-shown:text-base peer-placeholder-shown:leading-[26px] peer-placeholder-shown:text-[#737373]
+              peer-focus:-top-2 peer-focus:text-[12px] peer-focus:leading-[18px]
+              peer-[:not(:placeholder-shown)]:-top-2 peer-[:not(:placeholder-shown)]:text-[12px] peer-[:not(:placeholder-shown)]:leading-[18px]
+              cursor-text
+              [transition-property:top,font-size,line-height]
+              [transition-duration:150ms] [transition-timing-function:ease-out]
+              [color-transition:none]
+              group-data-[invalid=true]:peer-focus:text-red-600
+              group-data-[invalid=true]:peer-placeholder-shown:text-red-600
+              group-data-[invalid=true]:peer-[:not(:placeholder-shown)]:text-red-600
+              peer-[:not(:placeholder-shown)]:text-[#424242]
+              group-data-[invalid=false]:peer-focus:text-[#AC6F2D]
+              peer-focus:text-[#AC6F2D]
+              max-[1010px]:w-[456px] max-[1010px]:h-[26px]
+              max-[655px]:w-[304px] max-[655px]:h-[26px]">
               Name
             </label>
+            
+            <!-- error icon (shows only when invalid) -->
+            <span class="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 hidden
+              group-data-[invalid=true]:flex items-center justify-center
+              w-5 h-5 text-red-600">
+              <!-- circled exclamation -->
+              <img src="../assets/modal/exclamation.svg" class="w-[24px] h-[24px]">
+            </span>
           </form>
           <!-- Email -->
-          <form action="#" method="post"
-            class="relative box-border isolate flex flex-col items-start gap-[8px] py-[8px] px-0 w-[352px] h-[42px] border-b-[1.25px] border-[#D6D6D6] flex-none order-0 self-stretch grow-0 cursor-text
+          <form id="email-form"
+            class="group relative box-border isolate flex flex-col items-start gap-[8px] py-[8px] px-0 w-[352px] h-[42px] border-b-[1.25px] border-[#D6D6D6] flex-none order-0 self-stretch grow-0 cursor-text 
+            data-[invalid=true]:border-red-600
+            hover:border-[#F29C40]
+            focus-within:border-[#F29C40]
+            [input:not(:placeholder-shown)~&]:border-[#D6D6D6]
             max-[1010px]:w-[456px] max-[1010px]:h-[42px]
             max-[655px]:w-[304px] max-[655px]:h-[42px]">
-            <input id="email" name="email" type="email" placeholder="Email"
-              class="peer w-[352px] h-[26px] font-geist font-normal text-base leading-[26px] text-[#737373] bg-transparent border-none outline-none flex-none order-0 self-stretch grow-0 z-0 placeholder:text-transparent
+            <input id="email" name="email" type="text" placeholder="Email" aria-invalid="false"
+              class="peer w-[352px] h-[26px] font-geist font-normal text-base leading-[26px] text-[#737373] bg-transparent border-none outline-none flex-none order-0 self-stretch grow-0 z-0 placeholder:text-transparent pr-[26px]
+              group-data-[invalid=true]:focus:text-red-600
+              group-data-[invalid=true]:placeholder-shown:text-red-600
+              group-data-[invalid=true]:[:not(:placeholder-shown)]:text-red-600
+              [:not(:placeholder-shown)]:text-[#424242]
+              group-data-[invalid=false]:focus:text-[#AC6F2D]
+              focus:text-[#AC6F2D]
               max-[1010px]:w-[456px] max-[1010px]:h-[26px]
               max-[655px]:w-[304px] max-[655px]:h-[26px]"/>
             <label for="email"
-              class="absolute left-0 w-[352px] h-[18px] text-[#737373] font-geist font-normal text-[12px] leading-[18px] transition-all duration-150 ease-out -top-2 z-[1] peer-placeholder-shown:top-[8px] peer-placeholder-shown:text-base peer-placeholder-shown:leading-[26px] peer-placeholder-shown:text-[#737373] peer-focus:-top-2 peer-focus:text-[12px] peer-focus:leading-[18px] peer-focus:text-[#737373] cursor-text
-              max-[1010px]:w-[456px] max-[1010px]:h-[18px]
-              max-[655px]:w-[304px] max-[655px]:h-[18px]">
+              class="absolute left-0 w-[352px] h-[26px] text-[#737373] font-geist font-normal text-base leading-[26px]
+              transition-all duration-150 ease-out top-[8px] z-[1]
+              peer-placeholder-shown:top-[8px] peer-placeholder-shown:text-base peer-placeholder-shown:leading-[26px] peer-placeholder-shown:text-[#737373]
+              peer-focus:-top-2 peer-focus:text-[12px] peer-focus:leading-[18px]
+              peer-[:not(:placeholder-shown)]:-top-2 peer-[:not(:placeholder-shown)]:text-[12px] peer-[:not(:placeholder-shown)]:leading-[18px]
+              cursor-text
+              [transition-property:top,font-size,line-height]
+              [transition-duration:150ms] [transition-timing-function:ease-out]
+              [color-transition:none]
+              group-data-[invalid=true]:peer-focus:text-red-600
+              group-data-[invalid=true]:peer-placeholder-shown:text-red-600
+              group-data-[invalid=true]:peer-[:not(:placeholder-shown)]:text-red-600
+              peer-[:not(:placeholder-shown)]:text-[#424242]
+              group-data-[invalid=false]:peer-focus:text-[#AC6F2D]
+              peer-focus:text-[#AC6F2D]
+              max-[1010px]:w-[456px] max-[1010px]:h-[26px]
+              max-[655px]:w-[304px] max-[655px]:h-[26px]">
               Email
             </label>
+            <!-- error icon (shows only when invalid) -->
+            <span class="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 hidden
+              group-data-[invalid=true]:flex items-center justify-center
+              w-5 h-5 text-red-600">
+              <!-- circled exclamation -->
+              <img src="../assets/modal/exclamation.svg" class="w-[24px] h-[24px]">
+            </span>
           </form>
           <!-- Project Details -->
-          <form action="#" method="post"
-            class="relative box-border flex flex-col items-start gap-[8px] py-[8px] px-0 w-[352px] h-[168px] border-b-[1.25px] border-[#D6D6D6] cursor-text
+          <form id="project-details-form"
+            class="group relative box-border isolate flex flex-col items-start gap-[8px] py-[8px] px-0 w-[352px] h-[168px] border-b-[1.25px] border-[#D6D6D6] flex-none order-0 self-stretch grow-0 cursor-text 
+            data-[invalid=true]:border-red-600
+            hover:border-[#F29C40]
+            focus-within:border-[#F29C40]
+            [input:not(:placeholder-shown)~&]:border-[#D6D6D6]
             max-[1010px]:w-[456px] max-[1010px]:h-[168px]
             max-[655px]:w-[304px] max-[655px]:h-[168px]">
-            <textarea id="project-details" name="project-details" placeholder="Project Details"
-              class="peer w-[352px] h-[168px] font-geist font-normal text-base leading-[26px] text-[#737373] placeholder:text-transparent bg-transparent border-none outline-none resize-none overflow-y-scroll break-words [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden
-              max-[1010px]:w-[456px] max-[1010px]:h-[168px]
-              max-[655px]:w-[304px] max-[655px]:h-[168px]"></textarea>
+            <textarea id="project-details" name="project-details" placeholder="Project Details" aria-invalid="false"
+              class="peer w-[352px] h-[152px] font-geist font-normal text-base leading-[26px] text-[#737373] bg-transparent border-none outline-none flex-none order-0 self-stretch grow-0 z-0 placeholder:text-transparent pr-[26px]
+              resize-none overflow-y-scroll break-words [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden
+              group-data-[invalid=true]:focus:text-red-600
+              group-data-[invalid=true]:placeholder-shown:text-red-600
+              group-data-[invalid=true]:[:not(:placeholder-shown)]:text-red-600
+              [:not(:placeholder-shown)]:text-[#424242]
+              group-data-[invalid=false]:focus:text-[#AC6F2D]
+              focus:text-[#AC6F2D]
+              max-[1010px]:w-[456px] max-[1010px]:h-[152px]
+              max-[655px]:w-[304px] max-[655px]:h-[152px]"></textarea>
             <label for="project-details"
-              class="absolute left-0 w-[352px] h-[18px] text-[#737373] font-geist font-normal text-[12px] leading-[18px] transition-all duration-150 ease-out -top-2 z-[1] peer-placeholder-shown:top-[8px] peer-placeholder-shown:text-base peer-placeholder-shown:leading-[26px] peer-placeholder-shown:text-[#737373] peer-focus:-top-2 peer-focus:text-[12px] peer-focus:leading-[18px] peer-focus:text-[#737373] cursor-text
-              max-[1010px]:w-[456px] max-[1010px]:h-[18px]
-              max-[655px]:w-[304px] max-[655px]:h-[18px]">
+              class="absolute left-0 w-[352px] h-[26px] text-[#737373] font-geist font-normal text-base leading-[26px]
+              transition-all duration-150 ease-out top-[8px] z-[1]
+              peer-placeholder-shown:top-[8px] peer-placeholder-shown:text-base peer-placeholder-shown:leading-[26px] peer-placeholder-shown:text-[#737373]
+              peer-focus:-top-2 peer-focus:text-[12px] peer-focus:leading-[18px]
+              peer-[:not(:placeholder-shown)]:-top-2 peer-[:not(:placeholder-shown)]:text-[12px] peer-[:not(:placeholder-shown)]:leading-[18px]
+              cursor-text
+              [transition-property:top,font-size,line-height]
+              [transition-duration:150ms] [transition-timing-function:ease-out]
+              [color-transition:none]
+              group-data-[invalid=true]:peer-focus:text-red-600
+              group-data-[invalid=true]:peer-placeholder-shown:text-red-600
+              group-data-[invalid=true]:peer-[:not(:placeholder-shown)]:text-red-600
+              peer-[:not(:placeholder-shown)]:text-[#424242]
+              group-data-[invalid=false]:peer-focus:text-[#AC6F2D]
+              peer-focus:text-[#AC6F2D]
+              max-[1010px]:w-[456px] max-[1010px]:h-[26px]
+              max-[655px]:w-[304px] max-[655px]:h-[26px]">
               Project Details
             </label>
+
+            <div class="absolute w-full h-[42px] top-0">
+              <!-- error icon (shows only when invalid) -->
+              <span class="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 hidden
+                group-data-[invalid=true]:flex items-center justify-center
+                w-5 h-5 text-red-600">
+                <!-- circled exclamation -->
+                <img src="../assets/modal/exclamation.svg" class="w-[24px] h-[24px]">
+              </span>
+            </div>
           </form>
 
           <!-- Phil -->
@@ -165,7 +263,6 @@
                   $15k+
                 </span>
               </button>
-              <script src="../js/badges.js"></script>
             </div>
           </div>
         </div>
@@ -175,7 +272,7 @@
           class="flex flex-row justify-center items-center py-[12px] px-[24px] gap-[6px] w-[352px] h-[50px] bg-[#F29C40] border border-transparent shadow-[0px_1px_2px_rgba(16,24,40,0.05)] rounded-[40px] flex-none order-1 self-stretch grow-0 cursor-pointer transition-all duration-200 ease-out hover:bg-white hover:border-[1.5px] hover:border-[#F29C40] text-white hover:text-[#F29C40]
             max-[1010px]:w-[456px] max-[1010px]:h-[50px]
             max-[655px]:w-[304px] max-[655px]:h-[50px]"">
-          <span class="font-geist font-medium text-base leading-[26px]">
+          <span class="font-geist font-normal text-base leading-[26px]">
             Send Message
           </span>
         </button>
@@ -184,9 +281,11 @@
 
   </div>
   <!-- Cancel -->
-  <button type="button" data-modal-hide="email-modal"
+  <button type="button" data-modal-hide="modal"
     class="flex flex-row items-center p-[8px] gap-[8px] absolute w-[40px] h-[40px] right-[40px] top-[40px] bg-[rgba(255,255,255,0.5)] backdrop-blur-[1px] rounded-[48px] flex-none order-1 grow-0 z-1 cursor-pointer
     max-[655px]:right-[24px]">
     <img src="../assets/modal/cancel.svg" class="w-[24px] h-[24px]">
   </button>
 </div>
+
+<script src="../js/modal.js"></script>
