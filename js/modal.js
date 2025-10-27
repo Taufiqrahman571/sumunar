@@ -41,10 +41,7 @@ $(function () {
   const formEl  = document.getElementById('name-form');
   const inputEl = document.getElementById('name');
 
-  // Prevent pressing Enter from submitting the form
   formEl.addEventListener('submit', e => e.preventDefault());
-
-  // Regex: allow only letters (A-Z, a-z) and spaces
   const NAME_RE = /^[A-Za-z\s]+$/;
 
   function setInvalid(on) {
@@ -58,20 +55,25 @@ $(function () {
 
   function validate() {
     const value = inputEl.value.trim();
-    if (!value) { setInvalid(true); return; }       // empty → invalid
-    if (!isNameValid(value)) { setInvalid(true); return; }
-    setInvalid(false);                              // valid
+    if (!value) { setInvalid(true); return false; }
+    if (!isNameValid(value)) { setInvalid(true); return false; }
+    setInvalid(false);
+    return true;
   }
 
-  // Live feedback while typing
+  // live feedback
   inputEl.addEventListener('input', () => {
-    const valOk = isNameValid(inputEl.value);
-    setInvalid(!valOk && inputEl.value.trim() !== '');
+    const trimmed = inputEl.value.trim();
+    const valOk = trimmed !== '' && isNameValid(trimmed);
+    setInvalid(!valOk && trimmed !== '');
   });
 
-  // Check on blur and on load if prefilled
   inputEl.addEventListener('blur', validate);
   if (inputEl.value) validate();
+
+  // expose
+  window.validators = window.validators || {};
+  window.validators.validateName = validate;
 })();
 
 // Email Form
@@ -93,14 +95,15 @@ $(function () {
 
   async function hasMxRecords(domain, signal) {
     try {
-      const res = await fetch(`https://dns.google/resolve?name=${encodeURIComponent(domain)}&type=MX`, { signal });
+      const res = await fetch(
+        `https://dns.google/resolve?name=${encodeURIComponent(domain)}&type=MX`,
+        { signal }
+      );
       if (!res.ok) return false;
       const json = await res.json();
-      // Consider MX valid if we have at least one answer
       return Array.isArray(json.Answer) && json.Answer.length > 0;
     } catch {
-      // network/CORS/offline → treat as unknown (fallback to format only)
-      return null;
+      return null; // network/CORS → don’t block
     }
   }
 
@@ -108,40 +111,32 @@ $(function () {
 
   async function validate() {
     const value = inputEl.value.trim();
+    if (!value) { setInvalid(true); return false; }
 
-    // empty → treat as invalid (or change to false if you want "untouched" state)
-    if (!value) { setInvalid(true); return; }
+    if (!isFormatValid(value)) { setInvalid(true); return false; }
 
-    // 1) format
-    if (!isFormatValid(value)) { setInvalid(true); return; }
-
-    // 2) availability (domain MX)
     const domain = value.split('@')[1];
-    if (!domain) { setInvalid(true); return; }
+    if (!domain) { setInvalid(true); return false; }
 
-    // cancel previous MX request if any
     if (mxController) mxController.abort();
     mxController = new AbortController();
 
     const mx = await hasMxRecords(domain, mxController.signal);
-
-    // If MX check failed (null), fallback to format-only result
-    if (mx === null) { setInvalid(false); return; }
-
-    // Valid only when MX exists
+    if (mx === null) { setInvalid(false); return true; } // fallback to format-only
     setInvalid(!mx);
+    return !!mx;
   }
 
-  // Live feedback
   inputEl.addEventListener('input', () => {
-    // clear error while typing if format looks ok
-    const valOk = isFormatValid(inputEl.value);
-    if (valOk) setInvalid(false);
+    if (isFormatValid(inputEl.value)) setInvalid(false);
   });
 
-  // Check on blur and on load if prefilled
-  inputEl.addEventListener('blur', validate);
+  inputEl.addEventListener('blur', () => { validate(); });
   if (inputEl.value) validate();
+
+  // expose
+  window.validators = window.validators || {};
+  window.validators.validateEmail = validate;
 })();
 
 // Project Details Form
@@ -158,24 +153,100 @@ $(function () {
 
   function validate() {
     const value = inputEl.value.trim();
-    if (!value) { setInvalid(true); return; }       // empty → invalid
-    setInvalid(false);                              // valid
+    if (!value) { setInvalid(true); return false; }
+    setInvalid(false);
+    return true;
   }
 
-  // Live feedback while typing
   inputEl.addEventListener('input', () => {
     const hasValue = inputEl.value.trim() !== '';
-    setInvalid(!hasValue); // mark invalid only when empty
+    setInvalid(!hasValue);
   });
 
   inputEl.addEventListener('blur', validate);
   if (inputEl.value) validate();
+
+  // expose
+  window.validators = window.validators || {};
+  window.validators.validateProject = validate;
 })();
 
-// Badges
-document.querySelectorAll('[data-badge]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const pressed = btn.getAttribute('aria-pressed') === 'true';
-    btn.setAttribute('aria-pressed', (!pressed).toString());
+// Badges (budget)
+(function () {
+  const field = document.getElementById('budget-field');
+  const badges = field.querySelectorAll('[data-badge]');
+
+  function anySelected() {
+    return Array.from(badges).some(b => b.getAttribute('aria-pressed') === 'true');
+  }
+
+  function updateValidity() {
+    field.setAttribute('data-invalid', anySelected() ? 'false' : 'true');
+  }
+
+  badges.forEach(btn => {
+    btn.addEventListener('click', () => {
+      badges.forEach(b => b.setAttribute('aria-pressed', 'false'));
+      btn.setAttribute('aria-pressed', 'true');
+      updateValidity();
+    });
   });
-});
+
+  // expose
+  window.validators = window.validators || {};
+  window.validators.validateBudget = function validateBudget() {
+    const ok = anySelected();
+    field.setAttribute('data-invalid', ok ? 'false' : 'true');
+    return ok;
+  };
+
+  // start neutral
+  field.setAttribute('data-invalid', 'false');
+})();
+
+// CTA click: validate all fields at once
+(function () {
+  const cta = document.getElementById('cta-send');
+
+  function firstInvalidEl() {
+    return (
+      document.querySelector('#name-form[data-invalid="true"]') ||
+      document.querySelector('#email-form[data-invalid="true"]') ||
+      document.querySelector('#project-details-form[data-invalid="true"]') ||
+      document.querySelector('#budget-field[data-invalid="true"]')
+    );
+  }
+
+  async function validateAll() {
+    const v = window.validators || {};
+    const results = await Promise.all([
+      Promise.resolve(v.validateName?.() ?? false),
+      Promise.resolve(v.validateProject?.() ?? false),
+      Promise.resolve(v.validateBudget?.() ?? false),
+      // run email last (async)
+      v.validateEmail ? v.validateEmail() : Promise.resolve(false),
+    ]);
+
+    const allOk = results.every(Boolean);
+    if (!allOk) {
+      const bad = firstInvalidEl();
+      if (bad) {
+        bad.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // try focus the input/textarea if present
+        const focusable = bad.querySelector('input, textarea, button[aria-pressed]');
+        if (focusable) focusable.focus({ preventScroll: true });
+      }
+    }
+    return allOk;
+  }
+
+  if (cta) {
+    cta.addEventListener('click', async () => {
+      const ok = await validateAll();
+      if (!ok) return; // stop here; errors are visible
+
+      // All good → proceed
+      // submitForm();
+    });
+  }
+})();

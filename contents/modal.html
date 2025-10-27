@@ -44,27 +44,29 @@
             max-[1010px]:w-[456px] max-[1010px]:h-[62px]
             max-[655px]:w-[304px] max-[655px]:h-[62px]">
             <!-- Contact 1 -->
-            <div class="flex flex-row items-center p-[0px] gap-[10px] w-[400px] h-[30px] flex-none order-0 self-stretch grow-0
+            <a id="direct-email" href="#"
+              class="flex flex-row items-center p-[0px] gap-[10px] w-[400px] h-[30px] flex-none order-0 self-stretch grow-0
               max-[1010px]:w-[456px] max-[1010px]:h-[26px]
               max-[655px]:w-[304px] max-[655px]:h-[26px]">
               <img src="../assets/modal/mail.svg" class="w-[24px] h-[24px]">
-              <p class="w-[366px] h-[30px] font-geist font-medium text-lg leading-[30px] text-[#AC6F2D] flex-none order-1 grow-1
+              <div class="w-[366px] h-[30px] font-geist font-medium text-lg leading-[30px] text-[#AC6F2D] flex-none order-1 grow-1
                 max-[1010px]:w-[422px] max-[1010px]:h-[26px] max-[1010px]:text-base max-[1010px]:leading-[26px]
                 max-[655px]:w-[276px] max-[655px]:h-[26px] max-[655px]:text-base max-[655px]:leading-[26px]">
                 hello@sumunarstudio.com
-              </p>
-            </div>
+              </div>
+            </a>
             <!-- Contact 2 -->
-            <div class="flex flex-row items-center p-[0px] gap-[10px] w-[400px] h-[30px] flex-none order-0 self-stretch grow-0
+            <a href="https://cal.com/taufiq-sumunar" target="_blank" rel="noopener"
+              class="flex flex-row items-center p-[0px] gap-[10px] w-[400px] h-[30px] flex-none order-0 self-stretch grow-0
               max-[1010px]:w-[456px] max-[1010px]:h-[26px]
               max-[655px]:w-[304px] max-[655px]:h-[26px]">
               <img src="../assets/modal/vidcall.svg" class="w-[24px] h-[24px]">
-              <p class="w-[366px] h-[30px] font-geist font-medium text-lg leading-[30px] text-[#AC6F2D] flex-none order-1 grow-1
+              <div class="w-[366px] h-[30px] font-geist font-medium text-lg leading-[30px] text-[#AC6F2D] flex-none order-1 grow-1
                 max-[1010px]:w-[422px] max-[1010px]:h-[26px] max-[1010px]:text-base max-[1010px]:leading-[26px]
                 max-[655px]:w-[276px] max-[655px]:h-[26px] max-[655px]:text-base max-[655px]:leading-[26px]">
                 cal.com/taufiq-sumunar
-              </p>
-            </div>
+              </div>
+            </a>
           </div>
         </div>
       </div>
@@ -77,7 +79,7 @@
           max-[1010px]:w-[456px] max-[1010px]:h-[430px]
           max-[655px]:w-[304px] max-[655px]:h-[430px]">
           <!-- Name -->
-          <form id="name-form"
+          <form id="name-form" data-invalid="false"
             class="group relative box-border isolate flex flex-col items-start gap-[8px] py-[8px] px-0 w-[352px] h-[42px] border-b-[1.25px] border-[#D6D6D6] flex-none order-0 self-stretch grow-0 cursor-text 
             data-[invalid=true]:border-red-600
             hover:border-[#F29C40]
@@ -125,7 +127,7 @@
             </span>
           </form>
           <!-- Email -->
-          <form id="email-form"
+          <form id="email-form" data-invalid="false"
             class="group relative box-border isolate flex flex-col items-start gap-[8px] py-[8px] px-0 w-[352px] h-[42px] border-b-[1.25px] border-[#D6D6D6] flex-none order-0 self-stretch grow-0 cursor-text 
             data-[invalid=true]:border-red-600
             hover:border-[#F29C40]
@@ -172,7 +174,7 @@
             </span>
           </form>
           <!-- Project Details -->
-          <form id="project-details-form"
+          <form id="project-details-form" data-invalid="false"
             class="group relative box-border isolate flex flex-col items-start gap-[8px] py-[8px] px-0 w-[352px] h-[168px] border-b-[1.25px] border-[#D6D6D6] flex-none order-0 self-stretch grow-0 cursor-text 
             data-[invalid=true]:border-red-600
             hover:border-[#F29C40]
@@ -224,14 +226,24 @@
           </form>
 
           <!-- Phil -->
-          <div class="flex flex-col items-start p-[0px] gap-[12px] w-[352px] h-[130px] flex-none order-3 self-stretch grow-0
+          <div id="budget-field" data-invalid="false"
+            class="group relative flex flex-col items-start p-0 gap-[12px] w-[352px] h-[130px] flex-none order-3 self-stretch grow-0
             max-[1010px]:w-[456px] max-[1010px]:h-[130px]
             max-[655px]:w-[304px] max-[655px]:h-[130px]">
-            <p class="w-[352px] h-[26px] font-geist text-base leading-[26px] text-[#424242] flex-none order-0 self-stretch grow-0
-              max-[1010px]:w-[456px] max-[1010px]:h-[26px]
-              max-[655px]:w-[304px] max-[655px]:h-[26px]">
-              Your Investment (USD)
-            </p>
+
+            <div class="relative w-full">
+              <p class="w-[352px] h-[26px] font-geist text-base leading-[26px] text-[#424242]
+                group-data-[invalid=true]:text-red-600
+                max-[1010px]:w-[456px] max-[1010px]:h-[26px]
+                max-[655px]:w-[304px] max-[655px]:h-[26px]">
+                Your Investment (USD)
+              </p>
+              <span class="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 hidden
+                group-data-[invalid=true]:flex items-center justify-center
+                w-5 h-5 text-red-600">
+                <img src="../assets/modal/exclamation.svg" class="w-[24px] h-[24px]">
+              </span>
+            </div>
 
             <!-- Frame 2 -->
             <div class="flex flex-row flex-wrap items-start content-start p-0 gap-[8px] w-[352px] h-[92px] flex-none order-1 self-stretch grow-0
@@ -268,7 +280,7 @@
         </div>
 
         <!-- CTA Button -->
-        <button type="button"
+        <button id="cta-send" type="button"
           class="flex flex-row justify-center items-center py-[12px] px-[24px] gap-[6px] w-[352px] h-[50px] bg-[#F29C40] border border-transparent shadow-[0px_1px_2px_rgba(16,24,40,0.05)] rounded-[40px] flex-none order-1 self-stretch grow-0 cursor-pointer transition-all duration-200 ease-out hover:bg-white hover:border-[1.5px] hover:border-[#F29C40] text-white hover:text-[#F29C40]
             max-[1010px]:w-[456px] max-[1010px]:h-[50px]
             max-[655px]:w-[304px] max-[655px]:h-[50px]"">
@@ -282,10 +294,11 @@
   </div>
   <!-- Cancel -->
   <button type="button" data-modal-hide="modal"
-    class="flex flex-row items-center p-[8px] gap-[8px] absolute w-[40px] h-[40px] right-[40px] top-[40px] bg-[rgba(255,255,255,0.5)] backdrop-blur-[1px] rounded-[48px] flex-none order-1 grow-0 z-1 cursor-pointer
+    class="absolute flex flex-row items-center p-[8px] gap-[8px] w-[40px] h-[40px] right-[40px] top-[40px] bg-[rgba(255,255,255,0.5)] backdrop-blur-[1px] rounded-[48px] flex-none order-1 grow-0 z-1 cursor-pointer
     max-[655px]:right-[24px]">
     <img src="../assets/modal/cancel.svg" class="w-[24px] h-[24px]">
   </button>
 </div>
 
 <script src="../js/modal.js"></script>
+<script src="../js/script.js"></script>

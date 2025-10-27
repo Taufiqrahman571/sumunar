@@ -29,27 +29,39 @@
   var mailtoUrl = "mailto:" + to + "?subject=" + enc(subject) + "&body=" + enc(body);
 
   function openGmailPreferAccountChooser() {
-    // Try AccountChooser first (helps if user has multiple accounts)
     var w = window.open(accountChooserUrl, "_blank", "noopener,noreferrer");
     if (!w) {
-      // popup blocked — open direct gmail URL
       var w2 = window.open(gmailUrl, "_blank", "noopener,noreferrer");
-      if (!w2) {
-        // still blocked — fallback to mailto
-        window.location.href = mailtoUrl;
-      }
+      if (!w2) window.location.href = mailtoUrl;
     }
   }
 
-  document.addEventListener("DOMContentLoaded", function () {
-    // Ensure contact-btn exists; set mailto as fallback href (for no-js)
-    var btn = document.getElementById("contact-btn");
+  // Delegated click handler
+  document.addEventListener("click", function (e) {
+    const link = e.target.closest("#direct-email");
+    if (!link) return;
+    // Always provide a mailto fallback on the element
+    link.setAttribute("href", mailtoUrl);
+    e.preventDefault();
+    openGmailPreferAccountChooser();
+  }, { passive: false });
+
+  function init() {
+    var btn = document.getElementById("direct-email");
     if (!btn) return;
+
+    // Always set mailto fallback
     btn.setAttribute("href", mailtoUrl);
 
     btn.addEventListener("click", function (e) {
       e.preventDefault();
       openGmailPreferAccountChooser();
     });
-  });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init(); // DOM already loaded
+  }
 })();
