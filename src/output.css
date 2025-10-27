@@ -260,6 +260,9 @@
   .z-40 {
     z-index: 40;
   }
+  .z-50 {
+    z-index: 50;
+  }
   .z-\[1\] {
     z-index: 1;
   }
@@ -293,8 +296,20 @@
       max-width: 96rem;
     }
   }
+  .m-\[60px\] {
+    margin: 60px;
+  }
+  .m-\[100px\] {
+    margin: 100px;
+  }
   .mx-auto {
     margin-inline: auto;
+  }
+  .my-\[60\] {
+    margin-block: 60;
+  }
+  .my-\[60px\] {
+    margin-block: 60px;
   }
   .mt-auto {
     margin-top: auto;
@@ -310,9 +325,6 @@
   }
   .hidden {
     display: none;
-  }
-  .inline {
-    display: inline;
   }
   .table {
     display: table;
@@ -574,6 +586,9 @@
   .gap-10 {
     gap: calc(var(--spacing) * 10);
   }
+  .gap-\[1px\] {
+    gap: 1px;
+  }
   .gap-\[6px\] {
     gap: 6px;
   }
@@ -606,6 +621,9 @@
   }
   .overflow-hidden {
     overflow: hidden;
+  }
+  .overflow-y-auto {
+    overflow-y: auto;
   }
   .overflow-y-scroll {
     overflow-y: scroll;
@@ -708,11 +726,17 @@
   .p-\[0px\] {
     padding: 0px;
   }
+  .p-\[1px\] {
+    padding: 1px;
+  }
   .p-\[8px\] {
     padding: 8px;
   }
   .p-\[48px_52px\] {
     padding: 48px 52px;
+  }
+  .p-\[60px\] {
+    padding: 60px;
   }
   .px-0 {
     padding-inline: calc(var(--spacing) * 0);
@@ -735,6 +759,18 @@
   .py-\[12px\] {
     padding-block: 12px;
   }
+  .py-\[60px\] {
+    padding-block: 60px;
+  }
+  .py-\[100p\] {
+    padding-block: 100p;
+  }
+  .py-\[100px\] {
+    padding-block: 100px;
+  }
+  .py-\[px\] {
+    padding-block: px;
+  }
   .pt-6 {
     padding-top: calc(var(--spacing) * 6);
   }
@@ -743,6 +779,9 @@
   }
   .pb-4 {
     padding-bottom: calc(var(--spacing) * 4);
+  }
+  .pb-\[60px\] {
+    padding-bottom: 60px;
   }
   .text-center {
     text-align: center;
@@ -922,11 +961,6 @@
   .\[scrollbar-width\:none\] {
     scrollbar-width: none;
   }
-  .group-data-\[invalid\=false\]\:flex {
-    &:is(:where(.group)[data-invalid="false"] *) {
-      display: flex;
-    }
-  }
   .group-data-\[invalid\=true\]\:flex {
     &:is(:where(.group)[data-invalid="true"] *) {
       display: flex;
@@ -934,16 +968,6 @@
   }
   .group-data-\[invalid\=true\]\:text-red-600 {
     &:is(:where(.group)[data-invalid="true"] *) {
-      color: var(--color-red-600);
-    }
-  }
-  .group-data-\[invalid\=true\]\/budget\:flex {
-    &:is(:where(.group\/budget)[data-invalid="true"] *) {
-      display: flex;
-    }
-  }
-  .group-data-\[invalid\=true\]\/budget\:text-red-600 {
-    &:is(:where(.group\/budget)[data-invalid="true"] *) {
       color: var(--color-red-600);
     }
   }
@@ -1130,11 +1154,6 @@
   .data-\[invalid\=true\]\:border-red-600 {
     &[data-invalid="true"] {
       border-color: var(--color-red-600);
-    }
-  }
-  .data-\[invalid\=true\]\:text-red-600 {
-    &[data-invalid="true"] {
-      color: var(--color-red-600);
     }
   }
   .max-\[1010px\]\:top-\[-318px\] {
