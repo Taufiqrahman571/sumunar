@@ -191,9 +191,6 @@
   .pointer-events-none {
     pointer-events: none;
   }
-  .visible {
-    visibility: visible;
-  }
   .absolute {
     position: absolute;
   }
@@ -460,9 +457,6 @@
   }
   .w-\[352px\] {
     width: 352px;
-  }
-  .w-\[366px\] {
-    width: 366px;
   }
   .w-\[400px\] {
     width: 400px;
@@ -1041,13 +1035,6 @@
       }
     }
   }
-  .hover\:text-\[\#8A541F\] {
-    &:hover {
-      @media (hover: hover) {
-        color: #8A541F;
-      }
-    }
-  }
   .hover\:text-\[\#F29C40\] {
     &:hover {
       @media (hover: hover) {
@@ -1183,11 +1170,6 @@
   .max-\[1010px\]\:h-\[696px\] {
     @media (width < 1010px) {
       height: 696px;
-    }
-  }
-  .max-\[1010px\]\:w-\[422px\] {
-    @media (width < 1010px) {
-      width: 422px;
     }
   }
   .max-\[1010px\]\:w-\[456px\] {
@@ -1351,11 +1333,6 @@
   .max-\[655px\]\:h-\[654px\] {
     @media (width < 655px) {
       height: 654px;
-    }
-  }
-  .max-\[655px\]\:w-\[276px\] {
-    @media (width < 655px) {
-      width: 276px;
     }
   }
   .max-\[655px\]\:w-\[304px\] {

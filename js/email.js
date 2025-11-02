@@ -1,6 +1,9 @@
+// TODO: Implement mailto: for email backup (?)
+
 // Direct Email
+// TODO: Need proper implementation to storing in spreadsheets
 (function () {
-  const to = "hello@sumunarstudio.com";
+  const to = window.__ENV__.EMAIL;
   const subject = "New Project Inquiry";
 
   const body = [
@@ -116,7 +119,7 @@
     const body = buildBody({ name, email, details, budget });
 
     openGmailWithChooser({
-      to: "hello@sumunarstudio.com",
+      to: window.__ENV__.EMAIL,
       subject,
       body
     });
@@ -137,3 +140,77 @@
     init();
   }
 })();
+
+// Google Form Logging
+window.sendInquiry = function ({ name, email, details, budget }) {
+  const FORM_ACTION = window.__ENV__.FORM_ACTION;
+  const FIELDS = window.__ENV__.FIELDS;
+
+  function logToGoogleForm() {
+    const params = new URLSearchParams();
+    params.set(FIELDS.name, name || "");
+    params.set(FIELDS.email, email || "");
+    params.set(FIELDS.details, details || "");
+    params.set(FIELDS.budget, budget || "");
+
+    const body = params.toString();
+    const blob = new Blob([body], {
+      type: "application/x-www-form-urlencoded;charset=UTF-8",
+    });
+
+    const ok = navigator.sendBeacon?.(FORM_ACTION, blob);
+    if (!ok) {
+      fetch(FORM_ACTION, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+        },
+        body,
+      }).catch(() => {});
+    }
+  }
+
+  function buildBody() {
+    return [
+      "Hi Sumunar Studio,",
+      "",
+      "I would like to discuss a new project with you.",
+      "",
+      "Here are some details:",
+      `- Name: ${name || "[Your Name]"}`,
+      `- Email: ${email || "[Your Email]"}`,
+      `- Investment: ${budget || "[Select Range]"}`,
+      "",
+      "Project Brief:",
+      details || "[Please write your brief here]",
+      "",
+      "Please let me know the next steps.",
+      "",
+      "Thanks,",
+      name || "[Your Name]",
+    ].join("\r\n");
+  }
+
+  function composeGmailUrl({ to, subject, body }) {
+    const enc = encodeURIComponent;
+    const gmailUrl = `https://mail.google.com/mail/?fs=1&tf=cm&to=${enc(
+      to
+    )}&su=${enc(subject)}&body=${enc(body)}`;
+    return `https://accounts.google.com/AccountChooser?continue=${enc(
+      gmailUrl
+    )}`;
+  }
+
+  logToGoogleForm();
+
+  const subject = `New Project Inquiry ${name ? `[${name}]` : ""}`;
+  const body = buildBody();
+  const chooserUrl = composeGmailUrl({
+    to: window.__ENV__.EMAIL,
+    subject,
+    body,
+  });
+
+  window.open(chooserUrl, "_blank", "noopener,noreferrer");
+};

@@ -122,7 +122,7 @@ $(function () {
       const json = await res.json();
       return Array.isArray(json.Answer) && json.Answer.length > 0;
     } catch {
-      return null; // network/CORS → don’t block
+      return null;
     }
   }
 
@@ -141,7 +141,7 @@ $(function () {
     mxController = new AbortController();
 
     const mx = await hasMxRecords(domain, mxController.signal);
-    if (mx === null) { setInvalid(false); return true; } // fallback to format-only
+    if (mx === null) { setInvalid(false); return true; }
     setInvalid(!mx);
     return !!mx;
   }
@@ -225,7 +225,7 @@ $(function () {
 
 // CTA click: validate all fields at once
 (function () {
-  const cta = document.getElementById('cta-send');
+  const cta = document.getElementById("cta-send");
 
   function firstInvalidEl() {
     return (
@@ -242,7 +242,6 @@ $(function () {
       Promise.resolve(v.validateName?.() ?? false),
       Promise.resolve(v.validateProject?.() ?? false),
       Promise.resolve(v.validateBudget?.() ?? false),
-      // run email last (async)
       v.validateEmail ? v.validateEmail() : Promise.resolve(false),
     ]);
 
@@ -250,22 +249,30 @@ $(function () {
     if (!allOk) {
       const bad = firstInvalidEl();
       if (bad) {
-        bad.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        // try focus the input/textarea if present
-        const focusable = bad.querySelector('input, textarea, button[aria-pressed]');
+        bad.scrollIntoView({ behavior: "smooth", block: "center" });
+        const focusable = bad.querySelector("input, textarea, button[aria-pressed]");
         if (focusable) focusable.focus({ preventScroll: true });
       }
     }
     return allOk;
   }
 
-  if (cta) {
-    cta.addEventListener('click', async () => {
-      const ok = await validateAll();
-      if (!ok) return; // stop here; errors are visible
+  function getSelectedBudget() {
+    const el = document.querySelector('[data-badge][aria-pressed="true"] span');
+    return el ? el.textContent.trim() : "";
+  }
 
-      // All good → proceed
-      // submitForm();
+  if (cta) {
+    cta.addEventListener("click", async () => {
+      const ok = await validateAll();
+      if (!ok) return;
+
+      const name = document.getElementById("name")?.value.trim() || "";
+      const email = document.getElementById("email")?.value.trim() || "";
+      const details = document.getElementById("project-details")?.value.trim() || "";
+      const budget = getSelectedBudget();
+
+      window.sendInquiry?.({ name, email, details, budget });
     });
   }
 })();
