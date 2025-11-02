@@ -1,4 +1,4 @@
-// TODO: Implement mailto: for email backup (?)
+// TODO: Implement mailto: for sending email backups (?)
 
 // Direct Email
 // TODO: Need proper implementation to storing in spreadsheets
