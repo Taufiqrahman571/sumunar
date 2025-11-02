@@ -36,6 +36,25 @@ $(function () {
   }
 });
 
+// Cal.com
+(function () {
+  function initCalButton() {
+    const calButton = document.getElementById("direct-cal");
+    if (!calButton) return;
+
+    calButton.addEventListener("click", (e) => {
+      e.preventDefault();
+      window.open("https://cal.com/taufiq-sumunar", "_blank", "noopener,noreferrer");
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initCalButton);
+  } else {
+    initCalButton();
+  }
+})();
+
 // Name Form
 (function () {
   const formEl  = document.getElementById('name-form');
