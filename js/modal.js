@@ -257,22 +257,5 @@ $(function () {
     return allOk;
   }
 
-  function getSelectedBudget() {
-    const el = document.querySelector('[data-badge][aria-pressed="true"] span');
-    return el ? el.textContent.trim() : "";
-  }
-
-  if (cta) {
-    cta.addEventListener("click", async () => {
-      const ok = await validateAll();
-      if (!ok) return;
-
-      const name = document.getElementById("name")?.value.trim() || "";
-      const email = document.getElementById("email")?.value.trim() || "";
-      const details = document.getElementById("project-details")?.value.trim() || "";
-      const budget = getSelectedBudget();
-
-      window.sendInquiry?.({ name, email, details, budget });
-    });
-  }
+  window.validateAll = validateAll;
 })();
