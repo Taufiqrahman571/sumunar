@@ -135,9 +135,16 @@
         console.error('Save to sheet failed', e);
       }
 
-      // optional: reset fields or close modal
-      // document.getElementById('name').value = '';
-      // ... etc.
+      // eset form fields after successfully sent
+      document.getElementById("name").value = "";
+      document.getElementById("email").value = "";
+      document.getElementById("project-details").value = "";
+
+      // reset budget badge selection
+      const pressed = document.querySelector('[data-badge][aria-pressed="true"]');
+      if (pressed) {
+        pressed.setAttribute("aria-pressed", "false");
+      }
 
     } catch (err) {
       console.error('Email send failed', err);
@@ -161,7 +168,7 @@
   }
 })();
 
-// Google Form Logging Only (no email sending here)
+// Google Form Logging
 window.sendInquiry = function ({ name, email, details, budget }) {
   const FORM_ACTION = window.__ENV__.FORM_ACTION;
   const FIELDS = window.__ENV__.FIELDS;

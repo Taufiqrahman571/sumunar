@@ -25,7 +25,7 @@ EMAILJS_PUBLIC_KEY: 'yourEmailJSPubKey'
 ```
 
 **Notes**:
-- Always make sure all the EmailJS IDs when doing changes at EmailJS configuration, basically it will be always change when changes happen in EmailJS configuration
+- Always make sure all the EmailJS IDs when doing changes at EmailJS configuration
 
 ## Storing to Spreadsheets
 In this mechanism, messages will be stored in spreadsheets through Google Forms first that linked to Google Spreadsheets. Here are the steps to configure it:
