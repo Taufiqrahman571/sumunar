@@ -191,6 +191,12 @@
   .pointer-events-none {
     pointer-events: none;
   }
+  .invisible {
+    visibility: hidden;
+  }
+  .visible {
+    visibility: visible;
+  }
   .absolute {
     position: absolute;
   }
@@ -307,6 +313,9 @@
   }
   .hidden {
     display: none;
+  }
+  .inline {
+    display: inline;
   }
   .inline-block {
     display: inline-block;
@@ -837,6 +846,9 @@
   }
   .opacity-0 {
     opacity: 0%;
+  }
+  .opacity-60 {
+    opacity: 60%;
   }
   .shadow-\[0px_1px_2px_rgba\(16\,24\,40\,0\.05\)\] {
     --tw-shadow: 0px 1px 2px var(--tw-shadow-color, rgba(16,24,40,0.05));

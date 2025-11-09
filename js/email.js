@@ -34,12 +34,12 @@
   const TEMPLATE_ID = window.__ENV__.EMAILJS_TEMPLATE_ID;
   const PUBLIC_KEY  = window.__ENV__.EMAILJS_PUBLIC_KEY;
 
-  emailjs.init({
-    publicKey: PUBLIC_KEY,
-  });
+  // initialize EmailJS (safe to call even if already inited)
+  if (window.emailjs && typeof window.emailjs.init === 'function') {
+    try { emailjs.init({ publicKey: PUBLIC_KEY }); } catch (e) { /* ignore */ }
+  }
 
   function emailJsAvailable() {
-    console.log(window.emailjs)
     return typeof window.emailjs !== 'undefined' && SERVICE_ID && TEMPLATE_ID;
   }
 
@@ -48,11 +48,21 @@
     return active ? active.textContent.trim() : "";
   }
 
-  function isFormValid() {
+  // --- make this async and await window.validateAll() when present ---
+  async function isFormValid() {
+    // If your modal exposes an async validateAll(), await it.
     if (typeof window.validateAll === "function") {
-      return !!window.validateAll({ scrollToError: true });
+      try {
+        // validateAll returns a Promise<boolean> (in your modal.js)
+        const ok = await window.validateAll({ scrollToError: true });
+        return !!ok;
+      } catch (e) {
+        // in case validateAll throws, treat as invalid
+        return false;
+      }
     }
 
+    // fallback synchronous checks
     const invalid = document.querySelector("[data-invalid='true']");
     if (invalid) return false;
 
@@ -91,7 +101,6 @@
 
   // UI helpers (minimal)
   function showToast(message, isError = false) {
-    // minimal toast — replace with your UI if you already have one
     const existing = document.getElementById('inquiry-toast');
     if (existing) existing.remove();
     const t = document.createElement('div');
@@ -110,45 +119,64 @@
     setTimeout(() => t.remove(), 4000);
   }
 
+  // disable/enable CTA to avoid double submit
+  function setCTADisabled(state) {
+    const btn = document.getElementById("cta-send");
+    if (!btn) return;
+    btn.disabled = !!state;
+    if (state) {
+      btn.classList.add('opacity-60', 'pointer-events-none');
+    } else {
+      btn.classList.remove('opacity-60', 'pointer-events-none');
+    }
+  }
+
   async function handleCTA() {
+    // Await validation correctly
+    const valid = await isFormValid();
+    if (!valid) {
+      // showToast optional
+      return;
+    }
+
     const name = document.getElementById("name")?.value.trim() || "";
     const email = document.getElementById("email")?.value.trim() || "";
     const details = document.getElementById("project-details")?.value.trim() || "";
     const budget = getSelectedBudget();
 
-    if (!isFormValid()) return;
+    // disable button while sending
+    setCTADisabled(true);
 
-    // 1) Send email via EmailJS
     try {
       showToast('Sending message…');
-      await sendEmailViaEmailJS({ name, email, details, budget }); // promise resolves on success
+      await sendEmailViaEmailJS({ name, email, details, budget });
       showToast('Message sent!');
 
-      // 2) After successful send, store to Google Form -> Sheets
+      // After successful send, log to Google Form -> Sheets
       try {
-        // call your existing logger (which sends to Google Form)
         window.sendInquiry?.({ name, email, details, budget });
-        // showToast('Saved to spreadsheet.');
       } catch (e) {
-        // logging failed but email already sent
         showToast('Email sent but saving to sheet failed.', true);
         console.error('Save to sheet failed', e);
       }
 
-      // eset form fields after successfully sent
-      document.getElementById("name").value = "";
-      document.getElementById("email").value = "";
-      document.getElementById("project-details").value = "";
+      // reset fields
+      const nameEl = document.getElementById("name");
+      const emailEl = document.getElementById("email");
+      const detailsEl = document.getElementById("project-details");
+      if (nameEl) nameEl.value = "";
+      if (emailEl) emailEl.value = "";
+      if (detailsEl) detailsEl.value = "";
 
-      // reset budget badge selection
       const pressed = document.querySelector('[data-badge][aria-pressed="true"]');
-      if (pressed) {
-        pressed.setAttribute("aria-pressed", "false");
-      }
+      if (pressed) pressed.setAttribute("aria-pressed", "false");
 
     } catch (err) {
       console.error('Email send failed', err);
       showToast('Sending failed. Please try again.', true);
+    } finally {
+      // re-enable CTA
+      setCTADisabled(false);
     }
   }
 
@@ -157,6 +185,7 @@
     if (!btn) return;
     btn.addEventListener("click", (e) => {
       e.preventDefault();
+      // handleCTA is async but we don't need to await here
       handleCTA();
     });
   }
@@ -167,6 +196,7 @@
     init();
   }
 })();
+
 
 // Google Form Logging
 window.sendInquiry = function ({ name, email, details, budget }) {

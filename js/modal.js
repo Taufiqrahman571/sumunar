@@ -1,24 +1,65 @@
-// CLose-Open Modal
+// CLose-Open Modal (Preload + Cache Load)
 $(function () {
   const MODAL_ID = "modal";
   const MODAL_URL = "../contents/modal.html";
   const $root = $("#modal-root");
 
+  // Cached html string
+  let cachedModalHtml = null;
+  let preloadDone = false;
+
+  // Start preloading right away (non-blocking)
+  function preloadModal() {
+    if (preloadDone) return;
+    preloadDone = true;
+    fetch(MODAL_URL, { cache: "force-cache" })
+      .then(res => {
+        if (!res.ok) throw new Error("failed to preload modal");
+        return res.text();
+      })
+      .then(html => {
+        cachedModalHtml = html;
+        // warm images and decode them
+        preloadImagesFromHtml(html);
+        // insert modal DOM off the main interaction path so the browser does layout/paint early
+        insertModalHidden();
+      })
+      .catch(() => { /* ignore preload failures; fallback to load on-demand */ });
+  }
+
+  // Call preload on DOMContentLoaded
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", preloadModal);
+  } else {
+    preloadModal();
+  }
+
   $("#contact-btn").on("click", function (e) {
     e.preventDefault();
 
     if ($root.children().length === 0) {
-      $root.load(MODAL_URL, function () {
+      if (cachedModalHtml) {
+        // Insert cached html synchronously — instant
+        $root.html(cachedModalHtml);
         bindModalEvents();
         openModal();
-      });
+      } else {
+        // Fallback to jQuery load if preload failed/hasn't finished yet
+        $root.load(MODAL_URL, function () {
+          bindModalEvents();
+          openModal();
+        });
+      }
     } else {
+      // If we pre-inserted with insertModalHidden, the modal element already exists in DOM:
       openModal();
     }
   });
 
   function openModal() {
     const $m = $("#" + MODAL_ID);
+    // If we previously hid via inline style, clear that to make it visible
+    $m.css({ visibility: "", pointerEvents: "" });
     $m.removeClass("hidden").addClass("flex");
     $("body").addClass("overflow-hidden");
   }
@@ -30,10 +71,138 @@ $(function () {
   }
 
   function bindModalEvents() {
+    // Use delegated handler only once; it's safe even if called multiple times.
     $(document).on("click", `[data-modal-hide="${MODAL_ID}"]`, function () {
       closeModal();
     });
   }
+
+  /* -------------------------
+  Helper: preload images referenced inside the modal HTML
+  ------------------------- */
+  function preloadImagesFromHtml(html) {
+    try {
+      const tmp = document.createElement('div');
+      tmp.innerHTML = html;
+      // images and sources (picture)
+      const imgs = tmp.querySelectorAll('img[src], source[srcset], img[data-src]');
+      imgs.forEach(el => {
+        const src = el.getAttribute('src') || el.getAttribute('data-src') || el.getAttribute('srcset');
+        if (!src) return;
+        // simple preload: create Image to warm browser cache and decoding
+        const img = new Image();
+        img.src = src;
+        // don't append anywhere — browser will fetch/cache/decoder
+      });
+
+      // If modal uses large CSS background images, optionally prefetch via link rel=preload (not implemented here)
+    } catch (e) {
+      // ignore parse errors
+    }
+  }
+
+  /* Helper: insert modal DOM during idle time but keep it visually hidden
+   This warms parsing, CSS calculations, image decoding, and paints before user clicks.
+*/
+function insertModalHidden() {
+  if (!cachedModalHtml) return;
+  if ($root.children().length > 0) return;
+
+  // schedule work in idle time if available
+  const schedule = window.requestIdleCallback || function (cb) { return setTimeout(cb, 200); };
+
+  schedule(() => {
+    // create a container and parse HTML
+    const container = document.createElement('div');
+    // trim to avoid accidental text nodes
+    container.innerHTML = cachedModalHtml.trim();
+
+    // find the modal element inside the fragment
+    const modalEl = container.querySelector('#' + MODAL_ID);
+    if (!modalEl) {
+      // nothing found, append whole fragment but keep it display:none
+      container.style.display = 'none';
+      $root.append(container);
+      bindModalEvents();
+      // Execute any scripts in the fragment, to match jQuery .load() behavior
+      executeAndAttachScripts(container);
+      // notify listeners
+      document.dispatchEvent(new CustomEvent('modal:inserted', { detail: { insertedHidden: true } }));
+      return;
+    }
+
+    // keep existing class logic consistent: ensure it's not "open"
+    modalEl.classList.remove('flex');
+    modalEl.classList.add('hidden');
+
+    // trick: keep element in DOM but invisible so that browser performs layout and decodes images.
+    // visibility:hidden still allows images to load and layout to happen (display:none would block image loading)
+    modalEl.style.visibility = 'hidden';
+    modalEl.style.pointerEvents = 'none';
+
+    // Append the element (not the whole container) so queries by ID still work
+    $root.append(modalEl);
+
+    // bind events now that DOM exists
+    bindModalEvents();
+
+    // Execute inline/external scripts found inside the cached HTML fragment.
+    // This ensures any initialization code inside modal.html runs (validators, event listeners, etc.)
+    executeAndAttachScripts(container);
+
+    // Notify any consumer code that modal has been inserted so they can initialize too
+    document.dispatchEvent(new CustomEvent('modal:inserted', { detail: { insertedHidden: true } }));
+
+    // let the browser finish layout/paint on the hidden modal; then keep it hidden until open
+    setTimeout(() => {
+      // no-op placeholder — we intentionally keep it hidden. This is a good place to log if needed.
+      // console.debug('modal pre-inserted and warmed');
+    }, 150);
+  });
+}
+
+/* Helper: Execute inline and external scripts found in a document fragment/container.
+   This mimics the behavior of jQuery .load() which executes scripts.
+   - For external scripts (script.src) we append a new <script src="..."> so browser fetches/executes it.
+   - For inline scripts we create a new <script> with textContent and append to body so it runs.
+   - If a script has data-no-exec="true" it will be skipped (optional safety hook).
+*/
+function executeAndAttachScripts(container) {
+  try {
+    // find scripts that were inside the cached HTML
+    const scripts = Array.from(container.querySelectorAll('script'));
+    scripts.forEach(oldScript => {
+      // skip if explicitly marked to not run
+      if (oldScript.hasAttribute('data-no-exec')) return;
+
+      const newScript = document.createElement('script');
+
+      // copy type/module attributes
+      if (oldScript.type) newScript.type = oldScript.type;
+      if (oldScript.defer) newScript.defer = true;
+      if (oldScript.async) newScript.async = true;
+
+      if (oldScript.src) {
+        // external script: set src so browser fetches and executes it
+        newScript.src = oldScript.src;
+        // preserve crossorigin/nomodule if provided
+        if (oldScript.crossOrigin) newScript.crossOrigin = oldScript.crossOrigin;
+        if (oldScript.noModule) newScript.noModule = true;
+        document.head.appendChild(newScript);
+      } else {
+        // inline script: copy text and append to body to execute immediately
+        newScript.textContent = oldScript.textContent;
+        document.body.appendChild(newScript);
+      }
+
+      // remove the old script node reference (not necessary but keeps container clean)
+      oldScript.remove();
+    });
+  } catch (e) {
+    // safe fallback: ignore errors
+    console.error('executeAndAttachScripts error', e);
+  }
+}
 });
 
 // Cal.com
