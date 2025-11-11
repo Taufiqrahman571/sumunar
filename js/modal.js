@@ -162,44 +162,78 @@ function insertModalHidden() {
 }
 
 /* Helper: Execute inline and external scripts found in a document fragment/container.
-   This mimics the behavior of jQuery .load() which executes scripts.
-   - For external scripts (script.src) we append a new <script src="..."> so browser fetches/executes it.
-   - For inline scripts we create a new <script> with textContent and append to body so it runs.
-   - If a script has data-no-exec="true" it will be skipped (optional safety hook).
+   This version loads external scripts sequentially to preserve ordering.
 */
 function executeAndAttachScripts(container) {
   try {
-    // find scripts that were inside the cached HTML
     const scripts = Array.from(container.querySelectorAll('script'));
+
+    // First, execute inline scripts immediately (but after we schedule external scripts to load)
+    // We'll collect external script descriptors to load in order.
+    const externals = [];
+
     scripts.forEach(oldScript => {
-      // skip if explicitly marked to not run
-      if (oldScript.hasAttribute('data-no-exec')) return;
-
-      const newScript = document.createElement('script');
-
-      // copy type/module attributes
-      if (oldScript.type) newScript.type = oldScript.type;
-      if (oldScript.defer) newScript.defer = true;
-      if (oldScript.async) newScript.async = true;
-
-      if (oldScript.src) {
-        // external script: set src so browser fetches and executes it
-        newScript.src = oldScript.src;
-        // preserve crossorigin/nomodule if provided
-        if (oldScript.crossOrigin) newScript.crossOrigin = oldScript.crossOrigin;
-        if (oldScript.noModule) newScript.noModule = true;
-        document.head.appendChild(newScript);
-      } else {
-        // inline script: copy text and append to body to execute immediately
-        newScript.textContent = oldScript.textContent;
-        document.body.appendChild(newScript);
+      if (oldScript.hasAttribute('data-no-exec')) {
+        oldScript.remove();
+        return;
       }
 
-      // remove the old script node reference (not necessary but keeps container clean)
-      oldScript.remove();
+      if (oldScript.src) {
+        // preserve attributes we care about
+        externals.push({
+          src: oldScript.src,
+          type: oldScript.type || null,
+          defer: oldScript.defer || false,
+          async: oldScript.async || false,
+          crossOrigin: oldScript.crossOrigin || null,
+          noModule: oldScript.noModule || false
+        });
+        // remove placeholder
+        oldScript.remove();
+      } else {
+        // Inline script: create new script and run immediately
+        const newScript = document.createElement('script');
+        if (oldScript.type) newScript.type = oldScript.type;
+        newScript.textContent = oldScript.textContent;
+        document.body.appendChild(newScript);
+        oldScript.remove();
+      }
     });
+
+    // Helper to load a single external script and wait for it to finish.
+    function loadExternal(desc) {
+      return new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        if (desc.type) s.type = desc.type;
+        if (desc.defer) s.defer = true;
+        // ensure deterministic execution: do not set async unless explicitly requested.
+        if (desc.async) s.async = true;
+
+        if (desc.crossOrigin) s.crossOrigin = desc.crossOrigin;
+        if (desc.noModule) s.noModule = true;
+
+        s.onload = () => resolve();
+        s.onerror = (e) => {
+          console.warn('Failed to load script:', desc.src, e);
+          // resolve anyway to continue load sequence — you may choose to reject if you prefer
+          resolve();
+        };
+
+        // Use absolute/relative src as provided in the fragment
+        s.src = desc.src;
+        document.head.appendChild(s);
+      });
+    }
+
+    // Load externals sequentially (preserves order)
+    (async function loadAll() {
+      for (const desc of externals) {
+        // If script was marked async in original, we still await it here to preserve order,
+        // but setting desc.async will allow browsers to execute it asynchronously if allowed.
+        await loadExternal(desc);
+      }
+    })();
   } catch (e) {
-    // safe fallback: ignore errors
     console.error('executeAndAttachScripts error', e);
   }
 }

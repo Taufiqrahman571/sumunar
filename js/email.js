@@ -2,7 +2,7 @@
 (function () {
   const to = window.__ENV__.EMAIL;
   const subject = "New Project Inquiry";
-  const body = window.__TEMPLATE__.EMAIL_MESSAGE
+  const body = window.__TEMPLATE__.EMAIL_MESSAGE;
 
   const enc = encodeURIComponent;
   const mailtoUrl = `mailto:${enc(to)}?subject=${enc(subject)}&body=${enc(body)}`;

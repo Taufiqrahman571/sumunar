@@ -747,6 +747,9 @@
   .py-\[12px\] {
     padding-block: 12px;
   }
+  .py-\[64px\] {
+    padding-block: 64px;
+  }
   .pt-6 {
     padding-top: calc(var(--spacing) * 6);
   }
@@ -874,6 +877,11 @@
     -webkit-backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);
     backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);
   }
+  .transition-\[border-color\,box-shadow\,color\,background-color\] {
+    transition-property: border-color,box-shadow,color,background-color;
+    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+    transition-duration: var(--tw-duration, var(--default-transition-duration));
+  }
   .transition-\[border-color\,drop-shadow\,color\] {
     transition-property: border-color,drop-shadow,color;
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
@@ -918,18 +926,12 @@
   .\[transition-timing-function\:ease-out\] {
     transition-timing-function: ease-out;
   }
-  .will-change-transform {
-    will-change: transform;
-  }
   .outline-none {
     --tw-outline-style: none;
     outline-style: none;
   }
   .\[-ms-overflow-style\:none\] {
     -ms-overflow-style: none;
-  }
-  .\[backface-visibility\:hidden\] {
-    backface-visibility: hidden;
   }
   .\[background\:linear-gradient\(180deg\,rgba\(242\,233\,64\,0\.25\)_0\%\,rgba\(242\,156\,64\,0\.25\)_100\%\)\] {
     background: linear-gradient(180deg,rgba(242,233,64,0.25) 0%,rgba(242,156,64,0.25) 100%);
@@ -1054,65 +1056,6 @@
       color: transparent;
     }
   }
-  .before\:absolute {
-    &::before {
-      content: var(--tw-content);
-      position: absolute;
-    }
-  }
-  .before\:inset-0 {
-    &::before {
-      content: var(--tw-content);
-      inset: calc(var(--spacing) * 0);
-    }
-  }
-  .before\:-z-10 {
-    &::before {
-      content: var(--tw-content);
-      z-index: calc(10 * -1);
-    }
-  }
-  .before\:bg-white {
-    &::before {
-      content: var(--tw-content);
-      background-color: var(--color-white);
-    }
-  }
-  .before\:transition-\[clip-path\] {
-    &::before {
-      content: var(--tw-content);
-      transition-property: clip-path;
-      transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
-      transition-duration: var(--tw-duration, var(--default-transition-duration));
-    }
-  }
-  .before\:duration-300 {
-    &::before {
-      content: var(--tw-content);
-      --tw-duration: 300ms;
-      transition-duration: 300ms;
-    }
-  }
-  .before\:ease-\[cubic-bezier\(0\.25\,0\.46\,0\.45\,0\.94\)\] {
-    &::before {
-      content: var(--tw-content);
-      --tw-ease: cubic-bezier(0.25,0.46,0.45,0.94);
-      transition-timing-function: cubic-bezier(0.25,0.46,0.45,0.94);
-    }
-  }
-  .before\:content-\[\'\'\] {
-    &::before {
-      content: var(--tw-content);
-      --tw-content: '';
-      content: var(--tw-content);
-    }
-  }
-  .before\:\[clip-path\:ellipse\(0\%_60\%_at_50\%_50\%\)\] {
-    &::before {
-      content: var(--tw-content);
-      clip-path: ellipse(0% 60% at 50% 50%);
-    }
-  }
   .group-data-\[invalid\=true\]\:placeholder-shown\:text-red-600 {
     &:is(:where(.group)[data-invalid="true"] *) {
       &:placeholder-shown {
@@ -1158,16 +1101,6 @@
     &:hover {
       @media (hover: hover) {
         color: #F29C40;
-      }
-    }
-  }
-  .hover\:before\:\[clip-path\:ellipse\(120\%_120\%_at_50\%_50\%\)\] {
-    &:hover {
-      @media (hover: hover) {
-        &::before {
-          content: var(--tw-content);
-          clip-path: ellipse(120% 120% at 50% 50%);
-        }
       }
     }
   }
@@ -2357,11 +2290,6 @@
   syntax: "*";
   inherits: false;
 }
-@property --tw-content {
-  syntax: "*";
-  initial-value: "";
-  inherits: false;
-}
 @layer properties {
   @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
     *, ::before, ::after, ::backdrop {
@@ -2424,7 +2352,6 @@
       --tw-backdrop-sepia: initial;
       --tw-duration: initial;
       --tw-ease: initial;
-      --tw-content: "";
     }
   }
 }
