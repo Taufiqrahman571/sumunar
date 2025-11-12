@@ -18,11 +18,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Adjust 'public' below to match folder you publish (e.g. build output)
       - name: Create env.js from secrets
         run: |
-          mkdir -p public
-          cat > public/env.js <<EOF
+          cat > env.js <<EOF
           window.__ENV__ = {
             EMAIL: "${{ secrets.EMAIL }}",
             FORM_ACTION: "${{ secrets.FORM_ACTION }}",
@@ -38,13 +36,23 @@ jobs:
           };
           EOF
 
-      - name: Deploy to GitHub Pages
+      - name: Verify env.js exists
+        run: |
+          echo "Listing repo root:"
+          ls -la
+          if [ -f env.js ]; then
+            echo "env.js created successfully"
+          else
+            echo "env.js missing!" && exit 1
+          fi
+
+      - name: Configure Pages
         uses: actions/configure-pages@v4
 
       - name: Upload artifact for Pages
         uses: actions/upload-pages-artifact@v4
         with:
-          path: ./public
+          path: ./
 
       - name: Deploy artifact
         uses: actions/deploy-pages@v4
